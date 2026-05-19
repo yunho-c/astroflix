@@ -54,6 +54,7 @@ body::before {
 }
 
 body.reading-page {
+  color-scheme: light;
   background: #ffffff;
   color: #333333;
 }
@@ -172,6 +173,22 @@ textarea {
   color: var(--text);
 }
 
+body.reading-page .site-header {
+  background: rgb(255 255 255 / 0.95);
+  box-shadow: 0 1px 0 rgb(0 0 0 / 0.1);
+}
+
+body.reading-page .brand,
+body.reading-page .nav-links a {
+  color: #141414;
+}
+
+body.reading-page .nav-links a:hover,
+body.reading-page .nav-links a[aria-current='page'] {
+  background: rgb(0 0 0 / 0.06);
+  color: #000000;
+}
+
 .menu-toggle {
   display: none;
   width: 42px;
@@ -181,6 +198,12 @@ textarea {
   background: rgb(0 0 0 / 0.35);
   color: var(--accent);
   padding: 0;
+}
+
+body.reading-page .menu-toggle {
+  border-color: rgb(0 0 0 / 0.2);
+  background: rgb(0 0 0 / 0.04);
+  color: #141414;
 }
 
 .menu-icon {
@@ -865,6 +888,11 @@ textarea {
 
   .nav-links[data-open='true'] {
     display: flex;
+  }
+
+  body.reading-page .nav-links {
+    border-color: rgb(0 0 0 / 0.12);
+    background: rgb(255 255 255 / 0.98);
   }
 
   .menu-toggle {
