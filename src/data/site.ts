@@ -5,7 +5,7 @@ export const site = {
     'A modern Astro reproduction of the Jekflix publishing experience, rebuilt for cinematic discovery and comfortable reading.',
   url: 'https://jekflix-astro.example.com',
   language: 'en',
-  accent: '#e50914',
+  accent: '#ff0a16',
   nav: [
     { href: '/', label: 'Home' },
     { href: '/search/', label: 'Search' },
