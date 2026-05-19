@@ -714,7 +714,6 @@ body.reading-page .menu-toggle {
   padding: 8px 0 48px;
 }
 
-.author-panel,
 .share-panel,
 .plain-panel {
   border: 1px solid rgb(0 0 0 / 0.12);
@@ -731,6 +730,8 @@ body.reading-page .menu-toggle {
   align-items: center;
   width: min(860px, calc(100% - 32px));
   margin-inline: auto;
+  color: var(--text);
+  padding: 22px;
   border: 0;
   background: transparent;
 }
@@ -744,11 +745,11 @@ body.reading-page .menu-toggle {
 }
 
 .author-panel .section-title {
-  color: #141414;
+  color: currentColor;
 }
 
 .author-panel .lede {
-  color: #555555;
+  color: var(--text-muted);
 }
 
 .author-links {
@@ -759,9 +760,9 @@ body.reading-page .menu-toggle {
 }
 
 .author-links a {
-  border: 1px solid rgb(0 0 0 / 0.28);
+  border: 1px solid rgb(255 255 255 / 0.34);
   border-radius: 999px;
-  color: #141414;
+  color: currentColor;
   padding: 6px 10px;
   font-size: 0.82rem;
   font-weight: 800;
@@ -778,6 +779,18 @@ body.reading-page .menu-toggle {
   border-width: 1px 0 0;
   background: transparent;
   text-align: center;
+}
+
+.article-footer .author-panel {
+  color: #141414;
+}
+
+.article-footer .author-panel .lede {
+  color: #555555;
+}
+
+.article-footer .author-links a {
+  border-color: rgb(0 0 0 / 0.28);
 }
 
 .share-panel .meta-row {
