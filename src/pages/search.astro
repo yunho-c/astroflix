@@ -86,10 +86,24 @@ const index = posts.map((post) => {
       return card;
     }
 
-    function render(items) {
+    function createEmptyState(query) {
+      const panel = document.createElement('div');
+      panel.className = 'plain-panel';
+      appendText(
+        panel,
+        'p',
+        '',
+        query
+          ? `No matches for "${query}". Try a shorter term, author name, category, or tag.`
+          : 'No stories are available yet.',
+      );
+      return panel;
+    }
+
+    function render(items, query = '') {
       if (!results || !count) return;
       count.textContent = `${items.length} result${items.length === 1 ? '' : 's'}`;
-      results.replaceChildren(...items.map(createResult));
+      results.replaceChildren(...(items.length > 0 ? items.map(createResult) : [createEmptyState(query)]));
     }
 
     function search() {
@@ -104,6 +118,7 @@ const index = posts.map((post) => {
           const haystack = normalize([item.title, item.description, item.category, item.author, ...item.tags].join(' '));
           return terms.every((term) => haystack.includes(term));
         }),
+        query,
       );
     }
 
