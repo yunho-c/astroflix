@@ -25,19 +25,25 @@ const relatedPosts = getRelatedPosts(post, posts, 3);
 const pathname = `/posts/${post.id}/`;
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description} image={post.data.image.url} pathname={pathname}>
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  image={post.data.image.url}
+  pathname={pathname}
+  bodyClass="reading-page"
+>
   <ReadingProgress />
   <header class="article-hero">
-    <img class="article-hero-media" src={post.data.image.url} alt="" aria-hidden="true" />
     <div class="container">
-      <p class="eyebrow">{post.data.category}</p>
-      <h1 class="page-title">{post.data.title}</h1>
-      <p class="lede">{post.data.subtitle}</p>
       <div class="meta-row">
+        <span class="meta-pill">{post.data.category}</span>
         <span>{formatDate(post.data.pubDate)}</span>
         <span>{post.minutesToRead} min read</span>
         {author && <span>{author.data.name}</span>}
       </div>
+      <h1 class="page-title">{post.data.title}</h1>
+      <p class="lede">{post.data.subtitle}</p>
+      <img class="article-cover" src={post.data.image.url} alt={post.data.image.alt} />
     </div>
   </header>
 
@@ -52,7 +58,7 @@ const pathname = `/posts/${post.id}/`;
     <ShareLinks title={post.data.title} pathname={pathname} />
   </div>
 
-  <section class="section">
+  <section class="section recommendation-section">
     <div class="container">
       <div class="section-header">
         <div>
