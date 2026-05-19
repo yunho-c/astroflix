@@ -1,5 +1,5 @@
 ---
-import { formatDate, type Author, type PostWithMeta } from '../lib/content';
+import { formatDate, slugify, type Author, type PostWithMeta } from '../lib/content';
 
 type Props = {
   post: PostWithMeta;
@@ -7,18 +7,27 @@ type Props = {
 };
 
 const { post, author } = Astro.props;
+const categorySlug = slugify(post.data.category);
 ---
 
-<a class="post-card" href={`/posts/${post.id}/`}>
-  <img src={post.data.image.url} alt={post.data.image.alt} loading="lazy" />
-  <div class="post-card-body">
-    <div class="meta-row">
-      <span class="meta-pill">{post.data.category}</span>
-      <span>{post.minutesToRead} min read</span>
-      <span>{formatDate(post.data.pubDate)}</span>
+<article class="post-card">
+  <a class="post-card-category" href={`/categories/${categorySlug}/`}>{post.data.category}</a>
+  <a class="post-card-link" href={`/posts/${post.id}/`}>
+    <div class="post-card-cover">
+      <img src={post.data.image.url} alt={post.data.image.alt} loading="lazy" />
+      <span class="read-badge" aria-hidden="true"></span>
     </div>
-    <h3>{post.data.title}</h3>
-    <p>{post.data.description}</p>
-    {author && <p>{author.data.name}</p>}
-  </div>
-</a>
+    <div class="post-card-body">
+      <span class="post-card-date">{formatDate(post.data.pubDate)}</span>
+      <h3>{post.data.title}</h3>
+      <p>{post.data.description}</p>
+      <div class="meta-row">
+        <span>{post.minutesToRead} min read</span>
+        {author && <span>{author.data.name}</span>}
+      </div>
+      <div class="tag-row">
+        {post.data.tags.slice(0, 3).map((tag) => <span>#{tag}</span>)}
+      </div>
+    </div>
+  </a>
+</article>

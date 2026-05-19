@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostGrid from '../components/PostGrid.astro';
-import { formatDate, getAuthorMap, getPosts } from '../lib/content';
+import { formatDate, getAuthorMap, getPosts, slugify } from '../lib/content';
 
 const posts = await getPosts();
 const authors = await getAuthorMap();
@@ -11,11 +11,13 @@ const index = posts.map((post) => {
     title: post.data.title,
     description: post.data.description,
     category: post.data.category,
+    categoryHref: `/categories/${slugify(post.data.category)}/`,
     tags: post.data.tags,
     author: author?.data.name ?? '',
     date: formatDate(post.data.pubDate),
     minutes: post.minutesToRead,
     href: `/posts/${post.id}/`,
+    image: post.data.image,
   };
 });
 ---
@@ -62,26 +64,52 @@ const index = posts.map((post) => {
     }
 
     function createResult(item) {
-      const card = document.createElement('a');
+      const card = document.createElement('article');
       card.className = 'post-card';
-      card.href = item.href;
+
+      const category = document.createElement('a');
+      category.className = 'post-card-category';
+      category.href = item.categoryHref;
+      category.textContent = item.category;
+
+      const link = document.createElement('a');
+      link.className = 'post-card-link';
+      link.href = item.href;
+
+      const cover = document.createElement('div');
+      cover.className = 'post-card-cover';
+
+      const image = document.createElement('img');
+      image.src = item.image.url;
+      image.alt = item.image.alt;
+      image.loading = 'lazy';
+
+      const badge = document.createElement('span');
+      badge.className = 'read-badge';
+      badge.setAttribute('aria-hidden', 'true');
 
       const body = document.createElement('div');
       body.className = 'post-card-body';
 
+      appendText(body, 'span', 'post-card-date', item.date);
+      appendText(body, 'h3', '', item.title);
+      appendText(body, 'p', '', item.description);
+
       const meta = document.createElement('div');
       meta.className = 'meta-row';
-      appendText(meta, 'span', 'meta-pill', item.category);
       appendText(meta, 'span', '', `${item.minutes} min read`);
-      appendText(meta, 'span', '', item.date);
       if (item.author) {
         appendText(meta, 'span', '', item.author);
       }
 
-      appendText(body, 'h3', '', item.title);
-      appendText(body, 'p', '', item.description);
-      body.prepend(meta);
-      card.append(body);
+      const tags = document.createElement('div');
+      tags.className = 'tag-row';
+      item.tags.slice(0, 3).forEach((tag) => appendText(tags, 'span', '', `#${tag}`));
+
+      cover.append(image, badge);
+      body.append(meta, tags);
+      link.append(cover, body);
+      card.append(category, link);
 
       return card;
     }
