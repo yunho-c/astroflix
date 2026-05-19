@@ -1,0 +1,21 @@
+---
+import type { Author } from '../lib/content';
+import { getAuthorLinks } from '../lib/seo';
+
+type Props = {
+  author: Author;
+};
+
+const { author } = Astro.props;
+const links = getAuthorLinks(author);
+---
+
+{
+  links.length > 0 && (
+    <nav class="author-links" aria-label={`${author.data.name} links`}>
+      {links.map((link) => (
+        <a href={link.href} rel="me">{link.label}</a>
+      ))}
+    </nav>
+  )
+}

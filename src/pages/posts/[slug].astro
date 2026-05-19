@@ -6,6 +6,7 @@ import ReadingProgress from '../../components/ReadingProgress.astro';
 import ShareLinks from '../../components/ShareLinks.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { formatDate, getAuthorMap, getPosts, getRelatedPosts } from '../../lib/content';
+import { blogPostingJsonLd, serializeJsonLd } from '../../lib/seo';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -62,4 +63,5 @@ const pathname = `/posts/${post.id}/`;
       <PostGrid posts={relatedPosts} authors={authors} />
     </div>
   </section>
+  <script is:inline type="application/ld+json" set:html={serializeJsonLd(blogPostingJsonLd(post, author))} />
 </BaseLayout>
