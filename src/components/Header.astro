@@ -1,0 +1,38 @@
+---
+import { site } from '../data/site';
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label={`${site.name} home`}>
+      <span class="brand-mark" aria-hidden="true">J</span>
+      <span>{site.name}</span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="nav-links" aria-label="Primary">
+      {
+        site.nav.map((item) => {
+          const isCurrent = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
+          return (
+            <a href={item.href} aria-current={isCurrent ? 'page' : undefined}>
+              {item.label}
+            </a>
+          );
+        })
+      }
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const nav = document.querySelector<HTMLElement>('#site-nav');
+
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') !== 'true';
+    toggle.setAttribute('aria-expanded', String(open));
+    nav?.setAttribute('data-open', String(open));
+  });
+</script>

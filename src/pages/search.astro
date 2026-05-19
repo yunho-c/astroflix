@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostGrid from '../components/PostGrid.astro';
+import { formatDate, getAuthorMap, getPosts } from '../lib/content';
+
+const posts = await getPosts();
+const authors = await getAuthorMap();
+const index = posts.map((post) => {
+  const author = authors.get(post.data.author);
+  return {
+    title: post.data.title,
+    description: post.data.description,
+    category: post.data.category,
+    tags: post.data.tags,
+    author: author?.data.name ?? '',
+    date: formatDate(post.data.pubDate),
+    minutes: post.minutesToRead,
+    href: `/posts/${post.id}/`,
+  };
+});
+---
+
+<BaseLayout title="Search" description="Search the Jekflix Astro story archive.">
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Live archive</p>
+      <h1 class="page-title">Search the catalog</h1>
+      <p class="lede">Find stories by title, author, category, tag, or description.</p>
+
+      <div class="search-panel">
+        <label class="eyebrow" for="search-input">Search terms</label>
+        <input id="search-input" class="search-input" type="search" placeholder="Try search, Astro, recommendations..." autocomplete="off" />
+        <div id="result-count" class="meta-row" aria-live="polite"></div>
+        <div id="results" class="result-list"></div>
+        <noscript>
+          <div class="plain-panel">
+            <p>Live filtering needs JavaScript. The latest stories are available below.</p>
+          </div>
+          <PostGrid posts={posts} authors={authors} />
+        </noscript>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline define:vars={{ index }}>
+    const input = document.querySelector('#search-input');
+    const results = document.querySelector('#results');
+    const count = document.querySelector('#result-count');
+
+    function normalize(value) {
+      return value.toLowerCase().trim();
+    }
+
+    function render(items) {
+      if (!results || !count) return;
+      count.textContent = `${items.length} result${items.length === 1 ? '' : 's'}`;
+      results.innerHTML = items
+        .map(
+          (item) => `
+            <a class="post-card" href="${item.href}">
+              <div class="post-card-body">
+                <div class="meta-row">
+                  <span class="meta-pill">${item.category}</span>
+                  <span>${item.minutes} min read</span>
+                  <span>${item.date}</span>
+                  <span>${item.author}</span>
+                </div>
+                <h3>${item.title}</h3>
+                <p>${item.description}</p>
+              </div>
+            </a>
+          `,
+        )
+        .join('');
+    }
+
+    function search() {
+      const query = normalize(input?.value ?? '');
+      if (!query) {
+        render(index);
+        return;
+      }
+      const terms = query.split(/\s+/);
+      render(
+        index.filter((item) => {
+          const haystack = normalize([item.title, item.description, item.category, item.author, ...item.tags].join(' '));
+          return terms.every((term) => haystack.includes(term));
+        }),
+      );
+    }
+
+    input?.addEventListener('input', search);
+    render(index);
+  </script>
+</BaseLayout>

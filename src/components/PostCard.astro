@@ -1,0 +1,24 @@
+---
+import { formatDate, type Author, type PostWithMeta } from '../lib/content';
+
+type Props = {
+  post: PostWithMeta;
+  author?: Author;
+};
+
+const { post, author } = Astro.props;
+---
+
+<a class="post-card" href={`/posts/${post.id}/`}>
+  <img src={post.data.image.url} alt={post.data.image.alt} loading="lazy" />
+  <div class="post-card-body">
+    <div class="meta-row">
+      <span class="meta-pill">{post.data.category}</span>
+      <span>{post.minutesToRead} min read</span>
+      <span>{formatDate(post.data.pubDate)}</span>
+    </div>
+    <h3>{post.data.title}</h3>
+    <p>{post.data.description}</p>
+    {author && <p>{author.data.name}</p>}
+  </div>
+</a>

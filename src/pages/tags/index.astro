@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllTags, getPosts } from '../../lib/content';
+
+const tags = getAllTags(await getPosts());
+---
+
+<BaseLayout title="Tags" description="Browse Jekflix Astro posts by tag.">
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Topics</p>
+      <h1 class="page-title">Tags</h1>
+      <p class="lede">Use tags to move laterally through the archive.</p>
+      <div class="compact-grid" style="margin-top: 30px">
+        {tags.map((tag) => (
+          <a class="index-link" href={`/tags/${tag.slug}/`}>
+            #{tag.name}
+            <span>{tag.count}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

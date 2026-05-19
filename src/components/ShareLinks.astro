@@ -1,0 +1,21 @@
+---
+import { site } from '../data/site';
+
+type Props = {
+  title: string;
+  pathname: string;
+};
+
+const url = new URL(Astro.props.pathname, site.url).toString();
+const encodedUrl = encodeURIComponent(url);
+const encodedTitle = encodeURIComponent(Astro.props.title);
+---
+
+<section class="share-panel" aria-label="Share this post">
+  <p class="eyebrow">Share</p>
+  <div class="meta-row">
+    <a class="button secondary" href={`https://x.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`}>X</a>
+    <a class="button secondary" href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}>LinkedIn</a>
+    <a class="button secondary" href={`mailto:?subject=${encodedTitle}&body=${encodedUrl}`}>Email</a>
+  </div>
+</section>

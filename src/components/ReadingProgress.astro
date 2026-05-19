@@ -1,0 +1,17 @@
+<div class="progress-bar" aria-hidden="true"></div>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('.progress-bar');
+
+  function updateProgress() {
+    if (!bar) return;
+    const scrollTop = window.scrollY;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = max > 0 ? Math.min(1, scrollTop / max) : 0;
+    bar.style.width = `${progress * 100}%`;
+  }
+
+  updateProgress();
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+</script>

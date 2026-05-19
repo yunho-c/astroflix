@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllCategories, getPosts } from '../../lib/content';
+
+const categories = getAllCategories(await getPosts());
+---
+
+<BaseLayout title="Categories" description="Browse Jekflix Astro posts by category.">
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Sections</p>
+      <h1 class="page-title">Categories</h1>
+      <p class="lede">Jump into the main editorial lanes.</p>
+      <div class="compact-grid" style="margin-top: 30px">
+        {categories.map((category) => (
+          <a class="index-link" href={`/categories/${category.slug}/`}>
+            {category.name}
+            <span>{category.count}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

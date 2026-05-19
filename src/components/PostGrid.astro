@@ -1,0 +1,15 @@
+---
+import PostCard from './PostCard.astro';
+import type { Author, PostWithMeta } from '../lib/content';
+
+type Props = {
+  posts: PostWithMeta[];
+  authors?: Map<string, Author>;
+};
+
+const { posts, authors } = Astro.props;
+---
+
+<div class="post-grid">
+  {posts.map((post) => <PostCard post={post} author={authors?.get(post.data.author)} />)}
+</div>

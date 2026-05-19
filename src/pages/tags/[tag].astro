@@ -1,0 +1,30 @@
+---
+import PostGrid from '../../components/PostGrid.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllTags, getAuthorMap, getPosts, unslugify } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return getAllTags(posts).map((tag) => ({
+    params: { tag: tag.slug },
+    props: { tagName: tag.name },
+  }));
+}
+
+const { tagName } = Astro.props;
+const posts = (await getPosts()).filter((post) => post.data.tags.includes(tagName));
+const authors = await getAuthorMap();
+---
+
+<BaseLayout title={`#${tagName}`} description={`Posts tagged ${tagName}.`}>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Tag</p>
+      <h1 class="page-title">#{tagName ?? unslugify(Astro.params.tag ?? '')}</h1>
+      <p class="lede">{posts.length} stories in this topic.</p>
+      <div style="margin-top: 30px">
+        <PostGrid posts={posts} authors={authors} />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

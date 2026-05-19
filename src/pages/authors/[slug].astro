@@ -1,0 +1,48 @@
+---
+import { render } from 'astro:content';
+import PostGrid from '../../components/PostGrid.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAuthorMap, getAuthors, getPosts } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const authors = await getAuthors();
+  return authors.map((author) => ({
+    params: { slug: author.id },
+    props: { author },
+  }));
+}
+
+const { author } = Astro.props;
+const { Content } = await render(author);
+const posts = (await getPosts()).filter((post) => post.data.author === author.id);
+const authors = await getAuthorMap();
+---
+
+<BaseLayout title={author.data.name} description={author.data.bio}>
+  <section class="section">
+    <div class="container">
+      <div class="author-panel">
+        <img src={author.data.avatar.url} alt={author.data.avatar.alt} />
+        <div>
+          <p class="eyebrow">{author.data.role}</p>
+          <h1 class="page-title">{author.data.name}</h1>
+          <p class="lede">{author.data.bio}</p>
+        </div>
+      </div>
+      <div class="article">
+        <Content />
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Stories</p>
+          <h2 class="section-title">By {author.data.name}</h2>
+        </div>
+      </div>
+      <PostGrid posts={posts} authors={authors} />
+    </div>
+  </section>
+</BaseLayout>

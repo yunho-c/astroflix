@@ -1,0 +1,18 @@
+---
+import type { Author } from '../lib/content';
+
+type Props = {
+  author: Author;
+};
+
+const { author } = Astro.props;
+---
+
+<section class="author-panel" aria-label={`About ${author.data.name}`}>
+  <img src={author.data.avatar.url} alt={author.data.avatar.alt} loading="lazy" />
+  <div>
+    <p class="eyebrow">{author.data.role}</p>
+    <h2 class="section-title">{author.data.name}</h2>
+    <p class="lede">{author.data.bio}</p>
+  </div>
+</section>

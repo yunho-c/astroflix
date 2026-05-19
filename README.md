@@ -1,6 +1,6 @@
 # jekflix-astro
 
-Astro project scaffolded with Bun, strict TypeScript settings, local type checks, and CI-ready build validation.
+A modern Astro reproduction of the Jekflix theme concept: a cinematic, Netflix-inspired browsing experience for written content, rebuilt with typed content collections, static routes, accessible components, and a small amount of intentional client JavaScript.
 
 ## Requirements
 
@@ -27,12 +27,31 @@ Run commands from the repository root:
 │   └── ci.yml
 ├── public/
 ├── src/
-│   └── pages/
-│       └── index.astro
+│   ├── components/
+│   ├── content/
+│   │   ├── authors/
+│   │   └── posts/
+│   ├── data/
+│   ├── layouts/
+│   ├── lib/
+│   ├── pages/
+│   └── styles/
+├── src/content.config.ts
 ├── astro.config.mjs
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Features
 
-Any static assets, like images, can be placed in the `public/` directory.
+- Home page with a featured cinematic hero, post grid, categories, and tag shortcuts.
+- Typed post and author collections in `src/content.config.ts`.
+- Post pages with reading progress, metadata, author panel, sharing links, and related recommendations.
+- Live local search with a static fallback path when JavaScript is disabled.
+- Tag, category, author, about, contact, message-sent, 404, RSS, and sitemap routes.
+- Dark visual system inspired by the original Jekflix product idea without mechanically porting the legacy Jekyll implementation.
+
+## Content
+
+Posts live in `src/content/posts/` and authors live in `src/content/authors/`. Each post references an author by collection id and includes title, subtitle, description, publication date, category, tags, image metadata, and optional featured/draft flags.
+
+Site-level navigation, social links, and brand copy live in `src/data/site.ts`.
