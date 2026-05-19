@@ -31,8 +31,7 @@ body {
   min-width: 320px;
   background:
     linear-gradient(180deg, rgb(8 9 13 / 0.35), var(--bg) 420px),
-    radial-gradient(circle at 20% -10%, rgb(229 9 20 / 0.22), transparent 30%),
-    radial-gradient(circle at 92% 8%, rgb(0 178 169 / 0.16), transparent 28%),
+    linear-gradient(110deg, rgb(229 9 20 / 0.08), transparent 46%),
     var(--bg);
   color: var(--text);
   font-size: 16px;
@@ -205,13 +204,13 @@ textarea {
   margin: 0;
   max-width: 860px;
   font-family: ui-sans-serif, system-ui, sans-serif;
-  font-size: clamp(2rem, 6vw, 4.8rem);
+  font-size: 3.2rem;
   line-height: 0.95;
   letter-spacing: 0;
 }
 
 .section-title {
-  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-size: 2.2rem;
   line-height: 1;
 }
 
@@ -219,7 +218,7 @@ textarea {
   max-width: 720px;
   margin: 16px 0 0;
   color: var(--text-muted);
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: 1.15rem;
 }
 
 .button {
@@ -283,7 +282,7 @@ textarea {
 .hero-title {
   margin: 0;
   font-family: ui-sans-serif, system-ui, sans-serif;
-  font-size: clamp(3.2rem, 9vw, 7.8rem);
+  font-size: 6.5rem;
   line-height: 0.88;
   letter-spacing: 0;
 }
@@ -292,7 +291,7 @@ textarea {
   max-width: 620px;
   margin: 20px 0 0;
   color: var(--text-muted);
-  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  font-size: 1.28rem;
 }
 
 .meta-row {
@@ -534,7 +533,29 @@ textarea {
   background: linear-gradient(90deg, var(--accent), var(--accent-3), var(--accent-2));
 }
 
+@media (min-width: 1040px) {
+  .page-title {
+    font-size: 4.8rem;
+  }
+
+  .hero-title {
+    font-size: 7.8rem;
+  }
+
+  .section-title {
+    font-size: 2.4rem;
+  }
+}
+
 @media (max-width: 860px) {
+  .page-title {
+    font-size: 2.7rem;
+  }
+
+  .hero-title {
+    font-size: 4.2rem;
+  }
+
   .nav-links {
     position: fixed;
     inset: 72px 16px auto;
@@ -582,6 +603,23 @@ textarea {
 
   .brand {
     font-size: 0.9rem;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+  }
+
+  .section-title {
+    font-size: 1.65rem;
+  }
+
+  .hero-title {
+    font-size: 3.15rem;
+  }
+
+  .lede,
+  .hero-subtitle {
+    font-size: 1rem;
   }
 
   .hero-content {

@@ -51,31 +51,49 @@ const index = posts.map((post) => {
       return value.toLowerCase().trim();
     }
 
+    function appendText(parent, tag, className, text) {
+      const element = document.createElement(tag);
+      if (className) {
+        element.className = className;
+      }
+      element.textContent = text;
+      parent.append(element);
+      return element;
+    }
+
+    function createResult(item) {
+      const card = document.createElement('a');
+      card.className = 'post-card';
+      card.href = item.href;
+
+      const body = document.createElement('div');
+      body.className = 'post-card-body';
+
+      const meta = document.createElement('div');
+      meta.className = 'meta-row';
+      appendText(meta, 'span', 'meta-pill', item.category);
+      appendText(meta, 'span', '', `${item.minutes} min read`);
+      appendText(meta, 'span', '', item.date);
+      if (item.author) {
+        appendText(meta, 'span', '', item.author);
+      }
+
+      appendText(body, 'h3', '', item.title);
+      appendText(body, 'p', '', item.description);
+      body.prepend(meta);
+      card.append(body);
+
+      return card;
+    }
+
     function render(items) {
       if (!results || !count) return;
       count.textContent = `${items.length} result${items.length === 1 ? '' : 's'}`;
-      results.innerHTML = items
-        .map(
-          (item) => `
-            <a class="post-card" href="${item.href}">
-              <div class="post-card-body">
-                <div class="meta-row">
-                  <span class="meta-pill">${item.category}</span>
-                  <span>${item.minutes} min read</span>
-                  <span>${item.date}</span>
-                  <span>${item.author}</span>
-                </div>
-                <h3>${item.title}</h3>
-                <p>${item.description}</p>
-              </div>
-            </a>
-          `,
-        )
-        .join('');
+      results.replaceChildren(...items.map(createResult));
     }
 
     function search() {
-      const query = normalize(input?.value ?? '');
+      const query = normalize(input instanceof HTMLInputElement ? input.value : '');
       if (!query) {
         render(index);
         return;
