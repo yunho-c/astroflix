@@ -30,13 +30,19 @@ const image = Astro.props.image;
     <link rel="alternate" type="application/rss+xml" title={`${site.name} RSS`} href="/rss.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content="website" />
     {image && <meta property="og:image" content={image} />}
     <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
-    <meta name="theme-color" content={site.accent} />
+    <meta name="theme-color" content={site.themeColor} />
   </head>
   <body class={Astro.props.bodyClass}>
     <a class="skip-link" href="#content">Skip to content</a>

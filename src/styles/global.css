@@ -104,7 +104,7 @@ textarea {
   color: #111;
   padding: 8px 12px;
   font-family: ui-sans-serif, system-ui, sans-serif;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .skip-link:focus {
@@ -148,7 +148,7 @@ textarea {
   border-radius: 4px;
   background: var(--accent);
   color: white;
-  font-weight: 950;
+  font-weight: 900;
   box-shadow: 0 10px 28px rgb(229 9 20 / 0.35);
 }
 
@@ -163,7 +163,7 @@ textarea {
   color: var(--text-muted);
   padding: 9px 12px;
   font-size: 0.92rem;
-  font-weight: 750;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -276,7 +276,7 @@ body.reading-page .menu-toggle {
   background: var(--accent);
   color: white;
   padding: 10px 16px;
-  font-weight: 850;
+  font-weight: 700;
   line-height: 1;
 }
 
@@ -550,7 +550,7 @@ body.reading-page .menu-toggle {
   border-radius: 999px;
   background: transparent;
   padding: 10px 15px;
-  font-weight: 850;
+  font-weight: 700;
   text-transform: uppercase;
   transition:
     background 180ms ease,
@@ -765,7 +765,7 @@ body.reading-page .menu-toggle {
   color: currentColor;
   padding: 6px 10px;
   font-size: 0.82rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .author-links a:hover {

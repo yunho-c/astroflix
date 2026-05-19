@@ -6,6 +6,7 @@ export const site = {
   url: 'https://jekflix-astro.example.com',
   language: 'en',
   accent: '#ff0a16',
+  themeColor: '#141414',
   nav: [
     { href: '/', label: 'Home' },
     { href: '/search/', label: 'Search' },
