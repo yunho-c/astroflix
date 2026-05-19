@@ -11,7 +11,7 @@ const categories = getAllCategories(await getPosts());
       <p class="eyebrow">Sections</p>
       <h1 class="page-title">Categories</h1>
       <p class="lede">Jump into the main editorial lanes.</p>
-      <div class="compact-grid" style="margin-top: 30px">
+      <div class="compact-grid content-offset">
         {categories.map((category) => (
           <a class="index-link" href={`/categories/${category.slug}/`}>
             {category.name}

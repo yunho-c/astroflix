@@ -10,7 +10,13 @@ const currentPath = Astro.url.pathname;
       <span class="brand-mark" aria-hidden="true">J</span>
       <span>{site.name}</span>
     </a>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+      <span class="menu-icon" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </button>
     <nav id="site-nav" class="nav-links" aria-label="Primary">
       {
         site.nav.map((item) => {
@@ -33,6 +39,7 @@ const currentPath = Astro.url.pathname;
   toggle?.addEventListener('click', () => {
     const open = toggle.getAttribute('aria-expanded') !== 'true';
     toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     nav?.setAttribute('data-open', String(open));
   });
 </script>

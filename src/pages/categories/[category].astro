@@ -22,7 +22,7 @@ const authors = await getAuthorMap();
       <p class="eyebrow">Category</p>
       <h1 class="page-title">{categoryName ?? unslugify(Astro.params.category ?? '')}</h1>
       <p class="lede">{posts.length} stories in this category.</p>
-      <div style="margin-top: 30px">
+      <div class="content-offset">
         <PostGrid posts={posts} authors={authors} />
       </div>
     </div>

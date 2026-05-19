@@ -11,7 +11,7 @@ const tags = getAllTags(await getPosts());
       <p class="eyebrow">Topics</p>
       <h1 class="page-title">Tags</h1>
       <p class="lede">Use tags to move laterally through the archive.</p>
-      <div class="compact-grid" style="margin-top: 30px">
+      <div class="compact-grid content-offset">
         {tags.map((tag) => (
           <a class="index-link" href={`/tags/${tag.slug}/`}>
             #{tag.name}
