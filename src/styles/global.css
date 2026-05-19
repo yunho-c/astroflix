@@ -498,6 +498,11 @@ body.reading-page .menu-toggle {
   line-height: 1.16;
 }
 
+.post-card-title-link,
+.post-card-description-link {
+  display: block;
+}
+
 .post-card p {
   margin: 0;
   color: var(--text-muted);
@@ -517,7 +522,7 @@ body.reading-page .menu-toggle {
   margin-top: 2px;
 }
 
-.tag-row span {
+.tag-row a {
   border: 1px solid var(--text);
   border-radius: 999px;
   color: var(--text);
@@ -526,7 +531,7 @@ body.reading-page .menu-toggle {
   font-weight: 700;
 }
 
-.tag-row span:hover {
+.tag-row a:hover {
   background: var(--text);
   color: var(--bg);
 }

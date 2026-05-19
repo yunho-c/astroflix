@@ -12,7 +12,10 @@ const index = posts.map((post) => {
     description: post.data.description,
     category: post.data.category,
     categoryHref: `/categories/${slugify(post.data.category)}/`,
-    tags: post.data.tags,
+    tags: post.data.tags.map((tag) => ({
+      label: tag,
+      href: `/tags/${slugify(tag)}/`,
+    })),
     author: author?.data.name ?? '',
     date: formatDate(post.data.pubDate),
     minutes: post.minutesToRead,
@@ -104,7 +107,10 @@ const index = posts.map((post) => {
 
       const tags = document.createElement('div');
       tags.className = 'tag-row';
-      item.tags.slice(0, 3).forEach((tag) => appendText(tags, 'span', '', `#${tag}`));
+      item.tags.slice(0, 3).forEach((tag) => {
+        const link = appendText(tags, 'a', '', `#${tag.label}`);
+        link.href = tag.href;
+      });
 
       cover.append(image, badge);
       body.append(meta, tags);
@@ -143,7 +149,9 @@ const index = posts.map((post) => {
       const terms = query.split(/\s+/);
       render(
         index.filter((item) => {
-          const haystack = normalize([item.title, item.description, item.category, item.author, ...item.tags].join(' '));
+          const haystack = normalize(
+            [item.title, item.description, item.category, item.author, ...item.tags.map((tag) => tag.label)].join(' '),
+          );
           return terms.every((term) => haystack.includes(term));
         }),
         query,
