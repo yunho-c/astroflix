@@ -10,7 +10,10 @@ export type PostWithMeta = Post & {
 export async function getPosts() {
   const posts = await getCollection('posts', ({ data }) => !data.draft);
   return posts
-    .map((post) => ({ ...post, minutesToRead: minutesToRead(post.body ?? '') }))
+    .map((post) => ({
+      ...post,
+      minutesToRead: minutesToRead(post.body ?? post.rendered?.html ?? post.data.description),
+    }))
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 
@@ -26,6 +29,10 @@ export async function getAuthors() {
 export async function getAuthorMap() {
   const authors = await getAuthors();
   return new Map(authors.map((author) => [author.id, author]));
+}
+
+export function getPostPath(post: { data: { slug: string } }) {
+  return `/posts/${post.data.slug}/`;
 }
 
 export function minutesToRead(markdown: string) {

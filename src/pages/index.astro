@@ -1,7 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostGrid from '../components/PostGrid.astro';
-import { formatDate, getAllCategories, getAllTags, getAuthorMap, getFeaturedPost, getPosts } from '../lib/content';
+import {
+  formatDate,
+  getAllCategories,
+  getAllTags,
+  getAuthorMap,
+  getFeaturedPost,
+  getPostPath,
+  getPosts,
+} from '../lib/content';
 
 const posts = await getPosts();
 const authors = await getAuthorMap();
@@ -27,7 +35,7 @@ const featuredAuthor = authors.get(featured.data.author);
           {featuredAuthor && <span>{featuredAuthor.data.name}</span>}
         </div>
         <div class="meta-row">
-          <a class="button" href={`/posts/${featured.id}/`}>Read feature</a>
+          <a class="button" href={getPostPath(featured)}>Read feature</a>
           <a class="button secondary" href="/search/">Search archive</a>
         </div>
       </div>

@@ -17,6 +17,8 @@ Use the reference template to understand behavior, content model, layout intent,
 - Astro is currently scaffolded as the app shell.
 - Bun is the package manager.
 - TypeScript checking is expected through `astro check`.
+- Notion is the production source for blog posts through `@ntcho/notion-astro-loader`.
+- Local Markdown author profiles remain the v1 source for author pages and metadata.
 - Svelte/SvelteKit-style component architecture is the intended direction for interactive UI work. In this Astro repo, prefer Svelte islands/components where they fit. If the project later moves fully to SvelteKit, keep the same product goals and feature priorities.
 - Tailwind CSS and shadcn-svelte are appropriate candidates when they improve speed, consistency, accessibility, and maintainability.
 
@@ -106,6 +108,8 @@ For documentation-only changes, a build is not required unless package/config be
 
 - Keep changes focused and easy to review.
 - Do not commit generated directories such as `dist/`, `.astro/`, or `node_modules/`.
+- Do not commit Notion secrets. Use `NOTION_TOKEN` and `NOTION_DATABASE_ID` from local/deployment environment variables.
+- Do not commit the Notion asset cache at `src/assets/notion/`.
 - Preserve user changes in the worktree. Do not reset, checkout, or remove unrelated files.
 - If using assets or design details from the original template, confirm license compatibility and document the choice where it matters.
 

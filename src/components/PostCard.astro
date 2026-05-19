@@ -1,5 +1,5 @@
 ---
-import { formatDate, slugify, type Author, type PostWithMeta } from '../lib/content';
+import { formatDate, getPostPath, slugify, type Author, type PostWithMeta } from '../lib/content';
 
 type Props = {
   post: PostWithMeta;
@@ -8,21 +8,22 @@ type Props = {
 
 const { post, author } = Astro.props;
 const categorySlug = slugify(post.data.category);
+const postPath = getPostPath(post);
 ---
 
 <article class="post-card">
   <a class="post-card-category" href={`/categories/${categorySlug}/`}>{post.data.category}</a>
   <div class="post-card-link">
-    <a class="post-card-cover" href={`/posts/${post.id}/`} aria-label={`Read ${post.data.title}`}>
+    <a class="post-card-cover" href={postPath} aria-label={`Read ${post.data.title}`}>
       <img src={post.data.image.url} alt={post.data.image.alt} loading="lazy" />
       <span class="read-badge" aria-hidden="true"></span>
     </a>
     <div class="post-card-body">
       <span class="post-card-date">{formatDate(post.data.pubDate)}</span>
-      <a class="post-card-title-link" href={`/posts/${post.id}/`}>
+      <a class="post-card-title-link" href={postPath}>
         <h3>{post.data.title}</h3>
       </a>
-      <a class="post-card-description-link" href={`/posts/${post.id}/`}>
+      <a class="post-card-description-link" href={postPath}>
         <p>{post.data.description}</p>
       </a>
       <div class="meta-row">

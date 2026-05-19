@@ -1,5 +1,5 @@
 import { site } from '../data/site';
-import type { Author, PostWithMeta } from './content';
+import { getPostPath, type Author, type PostWithMeta } from './content';
 
 export function absoluteUrl(pathOrUrl: string) {
   return new URL(pathOrUrl, site.url).toString();
@@ -34,6 +34,8 @@ function personJsonLdEntity(author: Author, includeContext = false) {
 }
 
 export function blogPostingJsonLd(post: PostWithMeta, author?: Author) {
+  const postPath = getPostPath(post);
+
   return withoutEmpty({
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -41,8 +43,8 @@ export function blogPostingJsonLd(post: PostWithMeta, author?: Author) {
     alternativeHeadline: post.data.subtitle,
     description: post.data.description,
     image: post.data.image.url,
-    url: absoluteUrl(`/posts/${post.id}/`),
-    mainEntityOfPage: absoluteUrl(`/posts/${post.id}/`),
+    url: absoluteUrl(postPath),
+    mainEntityOfPage: absoluteUrl(postPath),
     datePublished: post.data.pubDate.toISOString(),
     dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
     inLanguage: site.language,

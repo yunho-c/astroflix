@@ -1,12 +1,12 @@
 import { site } from '../data/site';
-import { getPosts } from '../lib/content';
+import { getPostPath, getPosts } from '../lib/content';
 import { escapeXml } from '../lib/xml';
 
 export async function GET() {
   const posts = await getPosts();
   const items = posts
     .map((post) => {
-      const link = new URL(`/posts/${post.id}/`, site.url).toString();
+      const link = new URL(getPostPath(post), site.url).toString();
       return `
         <item>
           <title>${escapeXml(post.data.title)}</title>

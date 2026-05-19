@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostGrid from '../components/PostGrid.astro';
-import { formatDate, getAuthorMap, getPosts, slugify } from '../lib/content';
+import { formatDate, getAuthorMap, getPostPath, getPosts, slugify } from '../lib/content';
 
 const posts = await getPosts();
 const authors = await getAuthorMap();
@@ -19,7 +19,7 @@ const index = posts.map((post) => {
     author: author?.data.name ?? '',
     date: formatDate(post.data.pubDate),
     minutes: post.minutesToRead,
-    href: `/posts/${post.id}/`,
+    href: getPostPath(post),
     image: post.data.image,
   };
 });

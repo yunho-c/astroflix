@@ -6,6 +6,7 @@ A modern Astro reproduction of the Jekflix theme concept: a cinematic, Netflix-i
 
 - Bun 1.3.13
 - Node.js 22.12.0 or newer
+- A Notion internal integration shared with the posts database
 
 ## Commands
 
@@ -16,8 +17,41 @@ Run commands from the repository root:
 | `bun install` | Install dependencies |
 | `bun run dev` | Start the local Astro dev server |
 | `bun run check` | Run Astro diagnostics and type checks |
+| `bun run content:sync` | Force-refresh Notion content and generated Astro types |
 | `bun run build` | Type-check and build production output to `dist/` |
 | `bun run preview` | Preview the production build locally |
+
+## Notion Content
+
+Blog posts are loaded from a Notion database through `@ntcho/notion-astro-loader`. Copy `.env.example` to `.env` and set `NOTION_TOKEN` before running Astro commands locally:
+
+```sh
+NOTION_TOKEN=
+NOTION_DATABASE_ID=3652acb28f77803e9b1fdff413ef2daf
+```
+
+The Notion database must be shared with the integration that owns `NOTION_TOKEN`.
+GitHub Actions also expects `NOTION_TOKEN` as a repository secret. `NOTION_DATABASE_ID` can be set as a repository variable when it differs from the default in `.env.example`.
+
+Required post properties:
+
+| Property | Type | Notes |
+| :-- | :-- | :-- |
+| `Title` | Title | Post title |
+| `Slug` | Rich text | Lowercase URL slug under `/posts/`, e.g. `cinematic-homepages` |
+| `Subtitle` | Rich text | Hero/post lede |
+| `Description` | Rich text | SEO/search/card description |
+| `Status` | Status | Only `Published` posts build |
+| `Published At` | Date | Public publish date |
+| `Updated At` | Date | Optional modified date |
+| `Author` | Select | Must match a local author slug |
+| `Category` | Select | Category label |
+| `Tags` | Multi-select | Tag labels |
+| `Cover URL` | URL | Stable card/hero image URL |
+| `Cover Alt` | Rich text | Accessible image alt text |
+| `Featured` | Checkbox | Homepage hero candidate |
+
+Local author profiles are still stored in `src/content/authors`. The existing Markdown posts are retained as sample source material, but production post routes use Notion.
 
 ## Project Structure
 

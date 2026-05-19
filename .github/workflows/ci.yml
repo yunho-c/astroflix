@@ -24,3 +24,6 @@ jobs:
 
       - name: Check and build
         run: bun run build
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ vars.NOTION_DATABASE_ID }}
