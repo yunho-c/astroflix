@@ -39,16 +39,16 @@ Required post properties:
 | :-- | :-- | :-- |
 | `Title` | Title | Post title |
 | `Slug` | Rich text | Lowercase URL slug under `/posts/`, e.g. `cinematic-homepages` |
-| `Subtitle` | Rich text | Hero/post lede |
-| `Description` | Rich text | SEO/search/card description |
+| `Subtitle` | Rich text | Hero/post lede; falls back to description/title when empty |
+| `Description` | Rich text | SEO/search/card description; falls back to subtitle/title when empty |
 | `Status` | Status | Only `Published` posts build |
 | `Published At` | Date | Public publish date |
 | `Updated At` | Date | Optional modified date |
 | `Author` | Select | Must match a local author slug |
 | `Category` | Select | Category label |
 | `Tags` | Multi-select | Tag labels |
-| `Cover URL` | URL | Stable card/hero image URL |
-| `Cover Alt` | Rich text | Accessible image alt text |
+| `Cover URL` | URL | Stable card/hero image URL; falls back to a default cover when empty |
+| `Cover Alt` | Rich text | Accessible image alt text; falls back to title when empty |
 | `Featured` | Checkbox | Homepage hero candidate |
 
 Local author profiles are still stored in `src/content/authors`. The existing Markdown posts are retained as sample source material, but production post routes use Notion.

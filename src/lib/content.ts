@@ -79,13 +79,13 @@ export function getAllCategories(posts: PostWithMeta[]) {
 }
 
 export function getRelatedPosts(post: PostWithMeta, posts: PostWithMeta[], limit = 3) {
-  const tagSet = new Set(post.data.tags);
+  const tagSet = new Set<string>(post.data.tags);
   return posts
     .filter((candidate) => candidate.id !== post.id)
     .map((candidate) => ({
       post: candidate,
       score:
-        candidate.data.tags.filter((tag) => tagSet.has(tag)).length +
+        candidate.data.tags.filter((tag: string) => tagSet.has(tag)).length +
         (candidate.data.category === post.data.category ? 2 : 0),
     }))
     .sort((a, b) => b.score - a.score || b.post.data.pubDate.valueOf() - a.post.data.pubDate.valueOf())

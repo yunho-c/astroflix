@@ -12,7 +12,7 @@ const index = posts.map((post) => {
     description: post.data.description,
     category: post.data.category,
     categoryHref: `/categories/${slugify(post.data.category)}/`,
-    tags: post.data.tags.map((tag) => ({
+    tags: post.data.tags.map((tag: string) => ({
       label: tag,
       href: `/tags/${slugify(tag)}/`,
     })),

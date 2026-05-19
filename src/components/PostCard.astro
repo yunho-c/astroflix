@@ -31,7 +31,7 @@ const postPath = getPostPath(post);
         {author && <span>{author.data.name}</span>}
       </div>
       <div class="tag-row">
-        {post.data.tags.slice(0, 3).map((tag) => <a href={`/tags/${slugify(tag)}/`}>#{tag}</a>)}
+        {post.data.tags.slice(0, 3).map((tag: string) => <a href={`/tags/${slugify(tag)}/`}>#{tag}</a>)}
       </div>
     </div>
   </div>
