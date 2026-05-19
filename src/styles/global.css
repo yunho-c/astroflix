@@ -938,8 +938,7 @@ textarea {
     padding: 96px 0 56px;
   }
 
-  .article,
-  .article-footer {
+  .article {
     width: min(100% - 24px, 760px);
   }
 
