@@ -1492,7 +1492,7 @@ body.reading-page .nav-links a[aria-current='page'] {
 
 .site-footer {
   width: min(800px, calc(100% - 40px));
-  margin: 100px auto 120px;
+  margin: 100px auto 0;
   border-top: 1px solid #2e2e2e;
   background: var(--bg);
   color: #fff;
