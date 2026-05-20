@@ -1,17 +1,88 @@
 ---
 import { site } from '../data/site';
+
+const icons = {
+  github: {
+    label: 'GitHub',
+    viewBox: '0 0 24 24',
+    paths: [
+      'M12 .5C5.65.5.5 5.66.5 12.02c0 5.1 3.29 9.42 7.86 10.95.58.1.79-.25.79-.56v-2.14c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.4-5.26 5.69.42.36.78 1.06.78 2.15v3.19c0 .31.21.67.79.56A11.51 11.51 0 0 0 23.5 12.02C23.5 5.66 18.35.5 12 .5Z',
+    ],
+  },
+  x: {
+    label: 'X',
+    viewBox: '0 0 24 24',
+    paths: [
+      'M13.7 10.47 21.18 2h-1.77l-6.49 7.35L7.73 2H1.75l7.84 11.12L1.75 22h1.77l6.86-7.77L15.86 22h5.98l-8.14-11.53Zm-2.43 2.75-.79-1.1L4.15 3.3h2.73l5.1 7.1.79 1.1 6.65 9.27h-2.73l-5.42-7.55Z',
+    ],
+  },
+  rss: {
+    label: 'RSS',
+    viewBox: '0 0 24 24',
+    paths: [
+      'M5.36 16.5a2.14 2.14 0 1 1 0 4.28 2.14 2.14 0 0 1 0-4.28Zm-2.02-7.25c6.28 0 11.38 5.1 11.38 11.38h-3.2a8.18 8.18 0 0 0-8.18-8.18v-3.2Zm0-6.03c9.6 0 17.41 7.81 17.41 17.41h-3.2c0-7.84-6.37-14.21-14.21-14.21v-3.2Z',
+    ],
+  },
+  heart: {
+    label: 'Love',
+    viewBox: '0 0 24 24',
+    paths: [
+      'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z',
+    ],
+  },
+};
+
+const socialLinks = [
+  ...site.social.map((item) => ({
+    ...item,
+    icon: item.label.toLowerCase().includes('github') ? icons.github : icons.x,
+  })),
+];
+
+const menuLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about/', label: 'About' },
+  { href: '/contact/', label: 'Contact' },
+  { href: '/rss.xml', label: 'Feed' },
+];
 ---
 
 <footer class="site-footer">
-  <div class="container footer-inner">
-    <p>
-      <strong>{site.name}</strong> rebuilds the Jekflix browsing idea with typed content,
-      static-first delivery, and focused interactive details.
+  <div class="footer-inner">
+    <p class="footer-social">
+      {
+        socialLinks.map((item) => (
+          <a href={item.href} title={item.icon.label} aria-label={item.icon.label}>
+            <svg viewBox={item.icon.viewBox} aria-hidden="true">
+              {item.icon.paths.map((path) => (
+                <path d={path} />
+              ))}
+            </svg>
+          </a>
+        ))
+      }
     </p>
-    <nav class="footer-links" aria-label="Footer">
-      {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
-      <a href="/rss.xml">RSS</a>
-      {site.social.map((item) => <a href={item.href}>{item.label}</a>)}
+
+    <nav aria-label="Footer">
+      <ul class="footer-menu">
+        {
+          menuLinks.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
     </nav>
+
+    <p class="footer-credit">
+      <span>Jekflix</span> was made with
+      <svg class="love" viewBox={icons.heart.viewBox} aria-label="love">
+        {icons.heart.paths.map((path) => <path d={path} />)}
+      </svg>
+      by <a href="https://rossener.com" target="_blank" rel="noreferrer" class="creator"
+        >Thiago Rossener</a
+      >
+    </p>
   </div>
 </footer>
