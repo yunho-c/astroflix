@@ -17,10 +17,10 @@ const currentPath = Astro.url.pathname;
       <span>{site.name}</span>
       <span class="version">v3.1.2</span>
     </a>
-    <a class="get-theme" href="https://github.com/thiagorossener/jekflix-template">Get this theme!</a>
     <a class="search-link" href="/search/" aria-label="Search">
       <span aria-hidden="true"></span>
     </a>
+    <a class="get-theme" href="https://github.com/thiagorossener/jekflix-template">Get this theme!</a>
   </div>
 </header>
 
@@ -49,6 +49,10 @@ const currentPath = Astro.url.pathname;
   const overlay = document.querySelector<HTMLElement>('[data-menu-overlay]');
   const body = document.body;
 
+  function syncHeaderTone() {
+    body.classList.toggle('light', window.scrollY > 0);
+  }
+
   function setOpen(open: boolean) {
     toggle?.setAttribute('aria-expanded', String(open));
     toggle?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
@@ -63,4 +67,6 @@ const currentPath = Astro.url.pathname;
   });
 
   overlay?.addEventListener('click', () => setOpen(false));
+  syncHeaderTone();
+  window.addEventListener('scroll', syncHeaderTone, { passive: true });
 </script>

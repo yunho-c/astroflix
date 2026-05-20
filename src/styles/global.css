@@ -1023,13 +1023,17 @@ body.push-menu-to-right {
 .site-header {
   min-height: 62px;
   padding: 10px 15px;
-  background-color: rgb(0 0 0 / 0.85);
+  background-color: #141414;
   box-shadow: none;
   backdrop-filter: none;
   transition:
     left 300ms ease,
     background-color 500ms ease,
     box-shadow 500ms ease;
+}
+
+body.main-page .site-header {
+  background-color: rgb(0 0 0 / 0.85);
 }
 
 body.push-menu-to-right .site-header,
@@ -1155,6 +1159,28 @@ body.reading-page .search-link span {
   height: 3px;
   background: currentColor;
   transform: rotate(45deg);
+}
+
+body.reading-page .site-header {
+  background-color: #141414;
+  box-shadow: none;
+}
+
+body.reading-page .brand,
+body.reading-page .menu-toggle,
+body.reading-page .search-link span {
+  color: var(--text);
+}
+
+body.light:not(.main-page) .site-header {
+  background-color: rgb(255 255 255 / 0.95);
+  box-shadow: 0 0 1px 1px rgb(0 0 0 / 0.1);
+}
+
+body.light:not(.main-page) .brand,
+body.light:not(.main-page) .menu-toggle,
+body.light:not(.main-page) .search-link span {
+  color: var(--bg);
 }
 
 .sidebar {
@@ -1573,7 +1599,7 @@ body.reading-page .footer-inner p {
 }
 
 body.reading-page .page-main {
-  padding-top: 100px;
+  padding-top: 0;
 }
 
 .article-hero {
@@ -1611,6 +1637,7 @@ body.reading-page .page-main {
 }
 
 .article-hero .lede {
+  max-width: none;
   margin: 10px auto;
   color: #a6a6a6;
   font-size: 20px;
