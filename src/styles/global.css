@@ -1463,36 +1463,113 @@ body.reading-page .nav-links a[aria-current='page'] {
   margin: 100px auto 120px;
   border-top: 1px solid #2e2e2e;
   background: var(--bg);
+  color: #fff;
+  font-weight: 300;
 }
 
 .footer-inner {
   display: block;
   width: 100%;
   padding: 20px 25px;
-  color: #fff;
 }
 
 .footer-inner p {
-  margin: 0 0 20px;
+  margin: 16px 0;
   color: #fff;
   font-size: 16px;
   font-weight: 300;
   line-height: 25px;
 }
 
-.footer-links {
-  display: block;
+.footer-inner span {
+  font-weight: 700;
 }
 
-.footer-links a {
+.footer-social {
+  min-height: 28px;
+}
+
+.footer-social a {
   display: inline-block;
-  margin: 0 16px 10px 0;
+  margin-right: 10px;
+  color: #808080;
+  fill: currentColor;
+  line-height: 1;
+  transition:
+    color 0.3s ease,
+    fill 0.3s ease;
+}
+
+.footer-social svg {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  vertical-align: middle;
+}
+
+@media (min-width: 640px) {
+  .footer-social a {
+    margin-right: 20px;
+  }
+}
+
+.footer-menu {
+  margin: 16px 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.footer-menu li {
+  margin-bottom: 10px;
+}
+
+.footer-menu a {
+  display: inline-block;
   color: #808080;
   font-size: 15px;
+  line-height: 22px;
+  transition: color 0.3s ease;
 }
 
-.footer-links a:hover {
+.footer-social a:hover,
+.footer-menu a:hover {
   color: var(--accent);
+}
+
+.footer-menu a:hover,
+.footer-credit .creator:hover {
+  text-decoration: underline;
+}
+
+.footer-credit a {
+  display: inline-block;
+  color: #808080;
+  transition: color 0.3s ease;
+}
+
+.footer-credit a:hover {
+  color: var(--accent);
+}
+
+.footer-credit .love {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: -2px 3px 0;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2px;
+  vertical-align: middle;
+}
+
+body.reading-page .site-footer {
+  border-top-color: #e6e6e6;
+  background: #fff;
+  color: #141414;
+}
+
+body.reading-page .footer-inner p {
+  color: #141414;
 }
 
 body.reading-page .page-main {
