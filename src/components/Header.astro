@@ -5,11 +5,7 @@ const currentPath = Astro.url.pathname;
 ---
 
 <header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="/" aria-label={`${site.name} home`}>
-      <span class="brand-mark" aria-hidden="true">J</span>
-      <span>{site.name}</span>
-    </a>
+  <div class="header-inner">
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
       <span class="menu-icon" aria-hidden="true">
         <span></span>
@@ -17,7 +13,22 @@ const currentPath = Astro.url.pathname;
         <span></span>
       </span>
     </button>
-    <nav id="site-nav" class="nav-links" aria-label="Primary">
+    <a class="brand" href="/" aria-label={`${site.name} home`}>
+      <span>{site.name}</span>
+      <span class="version">v3.1.2</span>
+    </a>
+    <a class="get-theme" href="https://github.com/thiagorossener/jekflix-template">Get this theme!</a>
+    <a class="search-link" href="/search/" aria-label="Search">
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+</header>
+
+<div class="page-overlay" data-menu-overlay></div>
+
+<aside class="sidebar" id="site-nav" aria-label="Primary">
+  <h2>Menu</h2>
+    <nav class="nav-links" aria-label="Primary">
       {
         site.nav.map((item) => {
           const isCurrent = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
@@ -28,18 +39,28 @@ const currentPath = Astro.url.pathname;
           );
         })
       }
+      <a href="/rss.xml">Feed</a>
     </nav>
-  </div>
-</header>
+</aside>
 
 <script>
   const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
   const nav = document.querySelector<HTMLElement>('#site-nav');
+  const overlay = document.querySelector<HTMLElement>('[data-menu-overlay]');
+  const body = document.body;
+
+  function setOpen(open: boolean) {
+    toggle?.setAttribute('aria-expanded', String(open));
+    toggle?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    nav?.setAttribute('data-open', String(open));
+    overlay?.setAttribute('data-open', String(open));
+    body.classList.toggle('push-menu-to-right', open);
+  }
 
   toggle?.addEventListener('click', () => {
     const open = toggle.getAttribute('aria-expanded') !== 'true';
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    nav?.setAttribute('data-open', String(open));
+    setOpen(open);
   });
+
+  overlay?.addEventListener('click', () => setOpen(false));
 </script>

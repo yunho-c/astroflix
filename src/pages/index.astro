@@ -25,7 +25,7 @@ const featuredAuthor = authors.get(featured.data.author);
     <img class="hero-media" src={featured.data.image.url} alt={featured.data.image.alt} />
     <div class="container hero-content">
       <div class="hero-copy">
-        <p class="eyebrow">Featured story</p>
+        <p class="eyebrow">{formatDate(featured.data.pubDate)}</p>
         <h1 id="featured-title" class="hero-title">{featured.data.title}</h1>
         <p class="hero-subtitle">{featured.data.subtitle}</p>
         <div class="meta-row">
