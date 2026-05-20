@@ -1372,7 +1372,7 @@ body.reading-page .nav-links a[aria-current='page'] {
 .eyebrow {
   color: #fff;
   letter-spacing: 0;
-  text-transform: lowercase;
+  text-transform: uppercase;
 }
 
 .section-title {
@@ -1380,7 +1380,7 @@ body.reading-page .nav-links a[aria-current='page'] {
   font-size: 32px;
   font-weight: 700;
   line-height: 1.2;
-  text-transform: lowercase;
+  text-transform: none;
 }
 
 .post-grid {
@@ -1417,6 +1417,12 @@ body.reading-page .nav-links a[aria-current='page'] {
 
 .post-card-cover {
   background: transparent;
+  transform-origin: center top;
+  transition: transform 300ms ease;
+}
+
+.post-card:hover .post-card-cover {
+  transform: scale(1.08);
 }
 
 .post-card-cover::after {
@@ -1630,7 +1636,7 @@ body.reading-page .page-main {
 
 .article-hero .page-title {
   margin: 5px auto 10px;
-  color: #333;
+  color: #141414;
   font-size: 50px;
   font-weight: 700;
   line-height: 1.2;
