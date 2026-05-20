@@ -30,7 +30,7 @@ const requiredSlug = transformedPropertySchema.rich_text.pipe(
 );
 const optionalUrl = transformedPropertySchema.url
   .transform((url: string | null) => url?.trim())
-  .transform((url: string | undefined) => (url && URL.canParse(url) ? url : undefined));
+  .transform((url: string | undefined) => normalizeExternalUrl(url));
 const requiredSelect = transformedPropertySchema.select.pipe(z.string().trim().min(1));
 const requiredStatus = transformedPropertySchema.status.pipe(z.literal('Published'));
 type NotionDateValue = { start: Date; end: Date | null; time_zone: string | null } | null;
@@ -58,6 +58,19 @@ const notionPostPropertiesSchema = z.object({
 });
 
 type NotionPostProperties = z.infer<typeof notionPostPropertiesSchema>;
+
+function normalizeExternalUrl(url: string | undefined) {
+  if (!url) {
+    return undefined;
+  }
+
+  if (URL.canParse(url)) {
+    return url;
+  }
+
+  const withProtocol = `https://${url}`;
+  return URL.canParse(withProtocol) ? withProtocol : undefined;
+}
 
 const posts = defineCollection({
   loader: notionLoader({

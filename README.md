@@ -47,7 +47,7 @@ Required post properties:
 | `Author` | Select | Must match a local author slug |
 | `Category` | Select | Category label |
 | `Tags` | Multi-select | Tag labels |
-| `Cover URL` | URL | Stable card/hero image URL; falls back to a default cover when empty |
+| `Cover URL` | URL | Stable card/hero image URL; bare hosts are normalized to `https://` |
 | `Cover Alt` | Rich text | Accessible image alt text; falls back to title when empty |
 | `Featured` | Checkbox | Homepage hero candidate |
 

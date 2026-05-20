@@ -14,6 +14,10 @@ export default defineConfig({
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'assets.yunhocho.com',
+      },
     ],
   },
 });
