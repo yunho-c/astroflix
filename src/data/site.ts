@@ -9,10 +9,8 @@ export const site = {
   themeColor: '#141414',
   nav: [
     { href: '/', label: 'Home' },
-    { href: '/search/', label: 'Search' },
-    { href: '/tags/', label: 'Tags' },
-    { href: '/authors/', label: 'Authors' },
     { href: '/about/', label: 'About' },
+    { href: '/contact/', label: 'Contact' },
   ],
   social: [
     { href: 'https://github.com/', label: 'GitHub' },
