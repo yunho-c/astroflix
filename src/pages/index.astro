@@ -20,7 +20,7 @@ const categories = getAllCategories(posts);
 const featuredAuthor = authors.get(featured.data.author);
 ---
 
-<BaseLayout title="Home" description="A cinematic Astro publication inspired by Jekflix.">
+<BaseLayout title="Home" description="A cinematic Astro publication inspired by Jekflix." bodyClass="main-page">
   <section class="hero" aria-labelledby="featured-title">
     <img class="hero-media" src={featured.data.image.url} alt={featured.data.image.alt} />
     <div class="container hero-content">
