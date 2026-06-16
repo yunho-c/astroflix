@@ -2,6 +2,7 @@
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { site } from '../data/site';
+import { getFontCss, getFontLinks, resolveFontLanguage } from '../lib/fonts';
 import '../styles/global.css';
 
 type Props = {
@@ -10,16 +11,21 @@ type Props = {
   image?: string;
   pathname?: string;
   bodyClass?: string;
+  language?: string;
 };
 
 const title = Astro.props.title ? `${Astro.props.title} | ${site.name}` : site.title;
 const description = Astro.props.description ?? site.description;
 const canonical = new URL(Astro.props.pathname ?? Astro.url.pathname, site.url).toString();
 const image = Astro.props.image;
+const language = Astro.props.language ?? site.language;
+const fontLanguage = resolveFontLanguage(language);
+const fontLinks = getFontLinks();
+const fontCss = getFontCss();
 ---
 
 <!doctype html>
-<html lang={site.language}>
+<html lang={language} data-font-language={fontLanguage}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -30,12 +36,12 @@ const image = Astro.props.image;
     <link rel="alternate" type="application/rss+xml" title={`${site.name} RSS`} href="/rss.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&display=swap"
-      rel="stylesheet"
-    />
+    {
+      fontLinks.map((link) => (
+        <link rel={link.rel} href={link.href} as={link.as} type={link.type} crossorigin={link.crossorigin} />
+      ))
+    }
+    <style is:inline set:html={fontCss} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
