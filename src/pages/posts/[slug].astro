@@ -5,13 +5,13 @@ import PostGrid from '../../components/PostGrid.astro';
 import ReadingProgress from '../../components/ReadingProgress.astro';
 import ShareLinks from '../../components/ShareLinks.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { formatDate, getAuthorMap, getPosts, getRelatedPosts } from '../../lib/content';
+import { formatDate, getAuthorMap, getPostPath, getPostSlug, getPosts, getRelatedPosts } from '../../lib/content';
 import { blogPostingJsonLd, serializeJsonLd } from '../../lib/seo';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
   return posts.map((post) => ({
-    params: { slug: post.id },
+    params: { slug: getPostSlug(post) },
     props: { post },
   }));
 }
@@ -22,7 +22,7 @@ const posts = await getPosts();
 const authors = await getAuthorMap();
 const author = authors.get(post.data.author);
 const relatedPosts = getRelatedPosts(post, posts, 3);
-const pathname = `/posts/${post.id}/`;
+const pathname = getPostPath(post);
 ---
 
 <BaseLayout

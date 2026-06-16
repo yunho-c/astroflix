@@ -28,6 +28,15 @@ export async function getAuthorMap() {
   return new Map(authors.map((author) => [author.id, author]));
 }
 
+export function getPostSlug(post: { id: string; data: Record<string, unknown> }) {
+  const slug = post.data.slug;
+  return typeof slug === 'string' && slug ? slug : post.id;
+}
+
+export function getPostPath(post: { id: string; data: Record<string, unknown> }) {
+  return `/posts/${getPostSlug(post)}/`;
+}
+
 export function minutesToRead(markdown: string) {
   const text = markdown
     .replace(/```[\s\S]*?```/g, ' ')
