@@ -1796,3 +1796,34 @@ body.reading-page .page-main {
     margin-top: 20px;
   }
 }
+
+.article :where(ul, ol) {
+  margin: 1.1em auto 0;
+  padding-inline-start: 2.1em;
+}
+
+.article :where(li) {
+  margin-top: 0.35em;
+  padding-inline-start: 0.15em;
+}
+
+.article :where(li:first-child) {
+  margin-top: 0;
+}
+
+.article :where(li > ul, li > ol) {
+  width: auto;
+  margin: 0.35em 0 0;
+  padding: 0 0 0 1.5em;
+  line-height: inherit;
+}
+
+.article :where(li > p) {
+  width: auto;
+  margin: 0.35em 0 0;
+  padding: 0;
+}
+
+.article :where(li > p:first-child) {
+  margin-top: 0;
+}
