@@ -14,7 +14,11 @@
   --max: 1240px;
   --radius: 5px;
   --shadow: 0 22px 70px rgb(0 0 0 / 0.48);
-  font-family: "Titillium Web", "Helvetica Neue", Helvetica, sans-serif;
+  --font-body: "Titillium Web", "Helvetica Neue", Helvetica, sans-serif;
+  --font-ui: var(--font-body);
+  --font-heading: var(--font-body);
+  --font-article: var(--font-body);
+  font-family: var(--font-body);
 }
 
 * {
@@ -104,7 +108,7 @@ textarea {
   background: var(--text);
   color: #111;
   padding: 8px 12px;
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-ui, ui-sans-serif, system-ui, sans-serif);
   font-weight: 700;
 }
 
@@ -247,6 +251,7 @@ body.reading-page .menu-toggle {
 .page-title {
   margin: 0;
   max-width: 860px;
+  font-family: var(--font-heading);
   font-size: 3.2rem;
   line-height: 0.95;
   letter-spacing: 0;
@@ -644,6 +649,7 @@ body.reading-page .menu-toggle {
   margin: 0 auto;
   padding: 54px 0 18px;
   color: #333333;
+  font-family: var(--font-article);
   font-size: 1.18rem;
   line-height: 2;
   background: #ffffff;
