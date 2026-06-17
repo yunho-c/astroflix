@@ -237,7 +237,7 @@ body.reading-page .menu-toggle {
   margin: 0 0 8px;
   color: var(--accent-3);
   font-size: 0.74rem;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
@@ -1728,6 +1728,10 @@ body.reading-page .page-main {
 .article-footer {
   background: #f2f2f2;
   padding: 20px 0 70px;
+}
+
+.article-footer .eyebrow {
+  color: #808080;
 }
 
 .recommendation-section {
