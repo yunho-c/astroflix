@@ -5,6 +5,7 @@
     "": {
       "name": "jekflix-astro",
       "dependencies": {
+        "@lucide/astro": "^1.20.0",
         "astro": "^6.3.5",
       },
       "devDependencies": {
@@ -166,6 +167,8 @@
     "@jridgewell/sourcemap-codec": ["@jridgewell/sourcemap-codec@1.5.5", "", {}, "sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og=="],
 
     "@jsdevtools/rehype-toc": ["@jsdevtools/rehype-toc@3.0.2", "", {}, "sha512-n5JEf16Wr4mdkRMZ8wMP/wN9/sHmTjRPbouXjJH371mZ2LEGDl72t8tEsMRNFerQN/QJtivOxqK1frdGa4QK5Q=="],
+
+    "@lucide/astro": ["@lucide/astro@1.20.0", "", { "peerDependencies": { "astro": "^4 || ^5 || ^6" } }, "sha512-1M4J/zWunMbvrPgfe285LWPg7B6ql+nb5oncfvX0tO2RE0slTNof6HgJzq0Wlnwjed49jR4Lu/6xwZrKBvZOng=="],
 
     "@notionhq/client": ["@notionhq/client@2.3.0", "", { "dependencies": { "@types/node-fetch": "^2.5.10", "node-fetch": "^2.6.1" } }, "sha512-l7WqTCpQqC+HibkB9chghONQTYcxNQT0/rOJemBfmuKQRTu2vuV8B3yA395iKaUdDo7HI+0KvQaz9687Xskzkw=="],
 
