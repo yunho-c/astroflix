@@ -51,11 +51,12 @@ const pathname = getPostPath(post);
     <Content />
   </article>
 
+  <ShareLinks title={post.data.title} pathname={pathname} />
+
   <div class="article-footer">
     <div class="section">
       {author && <AuthorPanel author={author} />}
     </div>
-    <ShareLinks title={post.data.title} pathname={pathname} />
   </div>
 
   <section class="section recommendation-section">
