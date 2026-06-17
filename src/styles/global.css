@@ -34,8 +34,9 @@ body {
   font-size: 16px;
   line-height: 1.15;
   letter-spacing: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Temporarily disabled: global smoothing made body/chrome text render lighter than original Jekflix. */
+  /* -webkit-font-smoothing: antialiased; */
+  /* -moz-osx-font-smoothing: grayscale; */
 }
 
 body::before {
