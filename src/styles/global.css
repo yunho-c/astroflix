@@ -786,6 +786,14 @@ body.reading-page .menu-toggle {
   text-align: center;
 }
 
+.share-panel .share-title {
+  margin: 0 0 14px;
+  color: #141414;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
 .article-footer .author-panel {
   color: #141414;
 }
