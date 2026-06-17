@@ -1351,6 +1351,10 @@ body.reading-page .nav-links a[aria-current='page'] {
   margin-top: -80px;
 }
 
+.hero + .section .container {
+  width: 100%;
+}
+
 .hero + .section .section-header {
   display: none;
 }
