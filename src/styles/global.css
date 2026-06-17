@@ -32,7 +32,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-size: 16px;
-  line-height: 1.65;
+  line-height: 1.15;
   letter-spacing: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -1589,7 +1589,6 @@ body.reading-page .nav-links a[aria-current='page'] {
   display: inline-block;
   color: #808080;
   font-size: 15px;
-  line-height: 22px;
   transition: color 0.3s ease;
 }
 
