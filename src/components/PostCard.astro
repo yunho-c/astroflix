@@ -6,7 +6,7 @@ type Props = {
   author?: Author;
 };
 
-const { post, author } = Astro.props;
+const { post } = Astro.props;
 const categorySlug = slugify(post.data.category);
 const postPath = getPostPath(post);
 ---
@@ -26,10 +26,6 @@ const postPath = getPostPath(post);
       <a class="post-card-description-link" href={postPath}>
         <p>{post.data.description}</p>
       </a>
-      <div class="meta-row">
-        <span>{post.minutesToRead} min read</span>
-        {author && <span>{author.data.name}</span>}
-      </div>
       <div class="tag-row">
         {post.data.tags.slice(0, 3).map((tag: string) => <a href={`/tags/${slugify(tag)}/`}>#{tag}</a>)}
       </div>
