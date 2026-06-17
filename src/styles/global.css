@@ -217,6 +217,8 @@ body.reading-page .menu-toggle {
 .page-main {
   min-height: 70vh;
   padding-top: 62px;
+  transform: translateX(0);
+  transition: transform 300ms ease;
 }
 
 .section {
@@ -573,6 +575,8 @@ body.reading-page .menu-toggle {
   margin-top: 28px;
   border-top: 1px solid var(--line);
   background: #0b0b0b;
+  transform: translateX(0);
+  transition: transform 300ms ease;
 }
 
 .footer-inner {
@@ -1005,14 +1009,7 @@ body::before {
 
 body,
 body.reading-page {
-  transition:
-    left 300ms ease,
-    background-color 300ms ease;
-}
-
-body.push-menu-to-right {
-  position: relative;
-  left: 240px;
+  transition: background-color 300ms ease;
 }
 
 .site-header {
@@ -1021,8 +1018,9 @@ body.push-menu-to-right {
   background-color: #141414;
   box-shadow: none;
   backdrop-filter: none;
+  transform: translateX(0);
   transition:
-    left 300ms ease,
+    transform 300ms ease,
     background-color 500ms ease,
     box-shadow 500ms ease;
 }
@@ -1033,7 +1031,12 @@ body.main-page .site-header {
 
 body.push-menu-to-right .site-header,
 body.push-menu-to-right .progress-bar {
-  left: 240px;
+  transform: translateX(240px);
+}
+
+body.push-menu-to-right .page-main,
+body.push-menu-to-right .site-footer {
+  transform: translateX(240px);
 }
 
 body.reading-page .site-header {
@@ -1176,18 +1179,19 @@ body.light:not(.main-page) .search-link span {
 .sidebar {
   position: fixed;
   top: 0;
-  left: -240px;
+  left: 0;
   z-index: 90;
   width: 240px;
   height: 100%;
   padding: 10px 0 0;
   background: var(--text);
   color: var(--bg);
-  transition: left 300ms ease;
+  transform: translateX(-100%);
+  transition: transform 300ms ease;
 }
 
 .sidebar[data-open='true'] {
-  left: 0;
+  transform: translateX(0);
 }
 
 .sidebar h2 {
