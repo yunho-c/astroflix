@@ -1,5 +1,5 @@
 import { site } from '../data/site';
-import { getAllCategories, getAllTags, getAuthors, getPosts } from '../lib/content';
+import { getAllCategories, getAllTags, getAuthors, getPostPath, getPosts } from '../lib/content';
 import { escapeXml } from '../lib/xml';
 
 export async function GET() {
@@ -10,7 +10,7 @@ export async function GET() {
   const staticRoutes = ['/', '/search/', '/tags/', '/categories/', '/authors/', '/about/', '/contact/'];
   const routes = [
     ...staticRoutes,
-    ...posts.map((post) => `/posts/${post.id}/`),
+    ...posts.map((post) => getPostPath(post)),
     ...authors.map((author) => `/authors/${author.id}/`),
     ...tags.map((tag) => `/tags/${tag.slug}/`),
     ...categories.map((category) => `/categories/${category.slug}/`),

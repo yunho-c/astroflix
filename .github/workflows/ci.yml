@@ -24,3 +24,5 @@ jobs:
 
       - name: Check and build
         run: bun run build
+        env:
+          CONTENT_SOURCE: markdown

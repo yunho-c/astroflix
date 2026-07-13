@@ -1,28 +1,15 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { createMarkdownPostsCollection } from './content-sources/markdown-posts';
+import { createNotionPostsCollection } from './content-sources/notion-posts';
+import { imageSchema } from './content-sources/post-schema';
 
-const imageSchema = z.object({
-  url: z.url(),
-  alt: z.string(),
-});
-
-const posts = defineCollection({
-  loader: glob({ base: './src/content/posts', pattern: '**/*.{md,mdx}' }),
-  schema: z.object({
-    title: z.string(),
-    subtitle: z.string(),
-    description: z.string(),
-    pubDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
-    author: z.string(),
-    category: z.string(),
-    tags: z.array(z.string()).default([]),
-    image: imageSchema,
-    featured: z.boolean().default(false),
-    draft: z.boolean().default(false),
-  }),
-});
+const contentSource = getContentSource(import.meta.env.CONTENT_SOURCE);
+const posts =
+  contentSource === 'notion'
+    ? createNotionPostsCollection(getNotionConfig())
+    : createMarkdownPostsCollection();
 
 const authors = defineCollection({
   loader: glob({ base: './src/content/authors', pattern: '**/*.{md,mdx}' }),
@@ -43,3 +30,31 @@ const authors = defineCollection({
 });
 
 export const collections = { posts, authors };
+
+function getContentSource(value: string | undefined) {
+  const contentSource = value?.trim() || 'markdown';
+  const result = z.enum(['markdown', 'notion']).safeParse(contentSource);
+
+  if (!result.success) {
+    throw new Error(`Invalid CONTENT_SOURCE "${contentSource}". Use "markdown" or "notion".`);
+  }
+
+  return result.data;
+}
+
+function getNotionConfig() {
+  const token = import.meta.env.NOTION_TOKEN?.trim();
+  const databaseId = import.meta.env.NOTION_DATABASE_ID?.trim();
+  const missingVariables = [
+    !token && 'NOTION_TOKEN',
+    !databaseId && 'NOTION_DATABASE_ID',
+  ].filter((name): name is string => Boolean(name));
+
+  if (!token || !databaseId) {
+    throw new Error(
+      `Missing ${missingVariables.join(' and ')}. Set ${missingVariables.length === 1 ? 'it' : 'them'} when CONTENT_SOURCE="notion".`,
+    );
+  }
+
+  return { token, databaseId };
+}

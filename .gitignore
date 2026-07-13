@@ -2,6 +2,8 @@
 dist/
 # generated types
 .astro/
+# Notion content cache
+src/assets/notion/
 
 # dependencies
 node_modules/

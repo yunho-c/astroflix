@@ -11,6 +11,7 @@
     "dev": "astro dev",
     "build": "astro check && astro build",
     "check": "astro check",
+    "content:sync": "astro sync --force",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@ntcho/notion-astro-loader": "^1.2.2",
     "typescript": "^6.0.3"
   }
 }
