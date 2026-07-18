@@ -25,6 +25,7 @@ bun-debug.log*
 
 # test and coverage output
 coverage/
+.playwright-cli/
 
 # macOS-specific files
 .DS_Store

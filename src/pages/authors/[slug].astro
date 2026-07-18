@@ -3,7 +3,7 @@ import { render } from 'astro:content';
 import AuthorLinks from '../../components/AuthorLinks.astro';
 import PostGrid from '../../components/PostGrid.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getAuthorMap, getAuthors, getPosts } from '../../lib/content';
+import { getAuthors, getPosts } from '../../lib/content';
 import { personJsonLd, serializeJsonLd } from '../../lib/seo';
 
 export async function getStaticPaths() {
@@ -17,7 +17,6 @@ export async function getStaticPaths() {
 const { author } = Astro.props;
 const { Content } = await render(author);
 const posts = (await getPosts()).filter((post) => post.data.author === author.id);
-const authors = await getAuthorMap();
 ---
 
 <BaseLayout title={author.data.name} description={author.data.bio}>
@@ -45,7 +44,7 @@ const authors = await getAuthorMap();
           <h2 class="section-title">By {author.data.name}</h2>
         </div>
       </div>
-      <PostGrid posts={posts} authors={authors} />
+      <PostGrid posts={posts} />
     </div>
   </section>
   <script is:inline type="application/ld+json" set:html={serializeJsonLd(personJsonLd(author))} />

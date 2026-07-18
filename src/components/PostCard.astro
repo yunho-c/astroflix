@@ -1,9 +1,8 @@
 ---
-import { formatDate, getPostPath, slugify, type Author, type PostWithMeta } from '../lib/content';
+import { formatDate, getPostPath, slugify, type PostWithMeta } from '../lib/content';
 
 type Props = {
   post: PostWithMeta;
-  author?: Author;
 };
 
 const { post } = Astro.props;

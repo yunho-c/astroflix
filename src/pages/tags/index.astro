@@ -1,24 +1,31 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../data/site';
 import { getAllTags, getPosts } from '../../lib/content';
 
 const tags = getAllTags(await getPosts());
 ---
 
-<BaseLayout title="Tags" description="Browse Jekflix Astro posts by tag.">
+<BaseLayout title="Tags" description={`Browse ${site.name} posts by tag.`}>
   <section class="section">
     <div class="container">
       <p class="eyebrow">Topics</p>
       <h1 class="page-title">Tags</h1>
       <p class="lede">Use tags to move laterally through the archive.</p>
-      <div class="compact-grid content-offset">
-        {tags.map((tag) => (
-          <a class="index-link" href={`/tags/${tag.slug}/`}>
-            #{tag.name}
-            <span>{tag.count}</span>
-          </a>
-        ))}
-      </div>
+      {
+        tags.length > 0 ? (
+          <div class="compact-grid content-offset">
+            {tags.map((tag) => (
+              <a class="index-link" href={`/tags/${tag.slug}/`}>
+                #{tag.name}
+                <span>{tag.count}</span>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="plain-panel empty-state content-offset"><p>Tags appear after the first story is published.</p></div>
+        )
+      }
     </div>
   </section>
 </BaseLayout>

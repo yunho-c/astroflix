@@ -33,22 +33,22 @@ const fontCss = getFontCss();
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" type="application/rss+xml" title={`${site.name} RSS`} href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${site.name} RSS`} href={new URL('/rss.xml', site.url)} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
     {
       fontLinks.map((link) => (
         <link rel={link.rel} href={link.href} as={link.as} type={link.type} crossorigin={link.crossorigin} />
       ))
     }
     <style is:inline set:html={fontCss} />
+    <style is:inline set:html={`:root { --accent: ${site.theme.accent}; --bg: ${site.theme.themeColor}; }`} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content="website" />
     {image && <meta property="og:image" content={image} />}
     <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
-    <meta name="theme-color" content={site.themeColor} />
+    <meta name="theme-color" content={site.theme.themeColor} />
   </head>
   <body class={Astro.props.bodyClass}>
     <a class="skip-link" href="#content">Skip to content</a>

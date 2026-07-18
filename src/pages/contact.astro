@@ -1,28 +1,60 @@
 ---
+import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+
+const page = await getEntry('pages', 'contact');
+if (!page) {
+  throw new Error('Missing required page content: src/content/pages/contact.md');
+}
+const { Content } = await render(page);
+const contactLinks = [
+  ...(site.contact.email ? [{ href: `mailto:${site.contact.email}`, label: `Email ${site.contact.email}` }] : []),
+  ...site.social
+    .filter((link) => link.icon !== 'rss' && link.icon !== 'email')
+    .map(({ href, label }) => ({ href, label })),
+];
 ---
 
-<BaseLayout title="Contact" description="Contact Jekflix Astro.">
+<BaseLayout title={page.data.title} description={page.data.description}>
   <section class="section">
     <div class="container">
-      <p class="eyebrow">Contact</p>
-      <h1 class="page-title">Send a signal</h1>
-      <p class="lede">A static-friendly contact form route that can be wired to any form backend.</p>
-      <form class="plain-panel search-panel" action="/message-sent/" method="get">
-        <label>
-          <span class="eyebrow">Name</span>
-          <input class="search-input" name="name" required />
-        </label>
-        <label>
-          <span class="eyebrow">Email</span>
-          <input class="search-input" type="email" name="email" required />
-        </label>
-        <label>
-          <span class="eyebrow">Message</span>
-          <textarea class="search-input" name="message" rows="6" required></textarea>
-        </label>
-        <button class="button" type="submit">Send message</button>
-      </form>
+      <p class="eyebrow">{page.data.eyebrow}</p>
+      <h1 class="page-title">{page.data.title}</h1>
+      <p class="lede">{page.data.lede}</p>
+
+      <div class="plain-panel page-copy content-offset">
+        <Content />
+        {
+          contactLinks.length > 0 && (
+            <nav class="contact-links meta-row" aria-label="Contact links">
+              {contactLinks.map((link) => (
+                <a class="button secondary" href={link.href}>{link.label}</a>
+              ))}
+            </nav>
+          )
+        }
+      </div>
+
+      {
+        site.contact.formAction && (
+          <form class="plain-panel search-panel" action={site.contact.formAction} method="post">
+            <label>
+              <span class="eyebrow">Name</span>
+              <input class="search-input" name="name" autocomplete="name" required />
+            </label>
+            <label>
+              <span class="eyebrow">Email</span>
+              <input class="search-input" type="email" name="email" autocomplete="email" required />
+            </label>
+            <label>
+              <span class="eyebrow">Message</span>
+              <textarea class="search-input" name="message" rows="6" required></textarea>
+            </label>
+            <button class="button" type="submit">Send message</button>
+          </form>
+        )
+      }
     </div>
   </section>
 </BaseLayout>

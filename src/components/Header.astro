@@ -12,12 +12,12 @@ const currentPath = Astro.url.pathname;
     </button>
     <a class="brand" href="/" aria-label={`${site.name} home`}>
       <span>{site.name}</span>
-      <span class="version">v3.1.2</span>
+      {site.header.badge && <span class="version">{site.header.badge}</span>}
     </a>
     <a class="search-link" href="/search/" aria-label="Search">
       <span aria-hidden="true"></span>
     </a>
-    <a class="get-theme" href="https://github.com/thiagorossener/jekflix-template">Get this theme!</a>
+    {site.header.cta && <a class="get-theme" href={site.header.cta.href}>{site.header.cta.label}</a>}
   </div>
 </header>
 
@@ -36,7 +36,7 @@ const currentPath = Astro.url.pathname;
           );
         })
       }
-      <a href="/rss.xml">Feed</a>
+      {!site.nav.some((item) => item.href === '/rss.xml') && <a href="/rss.xml">Feed</a>}
     </nav>
 </aside>
 

@@ -4,11 +4,17 @@ import { z } from 'astro/zod';
 import { createMarkdownPostsCollection } from './content-sources/markdown-posts';
 import { createNotionPostsCollection } from './content-sources/notion-posts';
 import { imageSchema } from './content-sources/post-schema';
+import { getContentSource, getNotionConfig } from './content-sources/config';
 
 const contentSource = getContentSource(import.meta.env.CONTENT_SOURCE);
 const posts =
   contentSource === 'notion'
-    ? createNotionPostsCollection(getNotionConfig())
+    ? createNotionPostsCollection(
+        getNotionConfig({
+          NOTION_TOKEN: import.meta.env.NOTION_TOKEN,
+          NOTION_DATABASE_ID: import.meta.env.NOTION_DATABASE_ID,
+        }),
+      )
     : createMarkdownPostsCollection();
 
 const authors = defineCollection({
@@ -29,32 +35,14 @@ const authors = defineCollection({
   }),
 });
 
-export const collections = { posts, authors };
+const pages = defineCollection({
+  loader: glob({ base: './src/content/pages', pattern: '**/*.{md,mdx}' }),
+  schema: z.object({
+    title: z.string().trim().min(1),
+    description: z.string().trim().min(1),
+    eyebrow: z.string().trim().min(1),
+    lede: z.string().trim().min(1),
+  }),
+});
 
-function getContentSource(value: string | undefined) {
-  const contentSource = value?.trim() || 'markdown';
-  const result = z.enum(['markdown', 'notion']).safeParse(contentSource);
-
-  if (!result.success) {
-    throw new Error(`Invalid CONTENT_SOURCE "${contentSource}". Use "markdown" or "notion".`);
-  }
-
-  return result.data;
-}
-
-function getNotionConfig() {
-  const token = import.meta.env.NOTION_TOKEN?.trim();
-  const databaseId = import.meta.env.NOTION_DATABASE_ID?.trim();
-  const missingVariables = [
-    !token && 'NOTION_TOKEN',
-    !databaseId && 'NOTION_DATABASE_ID',
-  ].filter((name): name is string => Boolean(name));
-
-  if (!token || !databaseId) {
-    throw new Error(
-      `Missing ${missingVariables.join(' and ')}. Set ${missingVariables.length === 1 ? 'it' : 'them'} when CONTENT_SOURCE="notion".`,
-    );
-  }
-
-  return { token, databaseId };
-}
+export const collections = { posts, authors, pages };

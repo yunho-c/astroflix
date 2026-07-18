@@ -3,9 +3,8 @@ import { z } from 'astro/zod';
 import { notionLoader } from '@ntcho/notion-astro-loader';
 import { notionPageSchema } from '@ntcho/notion-astro-loader/schemas/page';
 import * as transformedPropertySchema from '@ntcho/notion-astro-loader/schemas/transformed-properties';
+import { site } from '../data/site';
 import { postSchema, postSlugSchema } from './post-schema';
-
-const defaultCoverUrl = 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80';
 
 const requiredTitle = transformedPropertySchema.title.pipe(z.string().trim().min(1));
 const optionalText = transformedPropertySchema.rich_text.transform((text: string) => text.trim() || undefined);
@@ -87,7 +86,7 @@ export function createNotionPostsCollection({ token, databaseId }: NotionPostsOp
         category: properties.Category,
         tags: properties.Tags,
         image: {
-          url: properties['Cover URL'] ?? defaultCoverUrl,
+          url: properties['Cover URL'] ?? site.content.defaultCoverUrl,
           alt: properties['Cover Alt'] ?? properties.Title,
         },
         featured: properties.Featured,

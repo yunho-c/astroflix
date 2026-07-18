@@ -840,6 +840,33 @@ body.reading-page .menu-toggle {
   color: #555555;
 }
 
+.page-copy {
+  max-width: 800px;
+  line-height: 1.7;
+}
+
+.page-copy > :first-child {
+  margin-top: 0;
+}
+
+.page-copy > :last-child {
+  margin-bottom: 0;
+}
+
+.contact-links {
+  margin-bottom: 0;
+}
+
+.empty-catalog {
+  background:
+    radial-gradient(circle at 24% 42%, rgb(255 10 22 / 0.24), transparent 32%),
+    linear-gradient(135deg, #080808, var(--bg));
+}
+
+.empty-state {
+  margin-top: 18px;
+}
+
 .search-panel {
   display: grid;
   gap: 18px;

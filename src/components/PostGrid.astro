@@ -1,15 +1,21 @@
 ---
 import PostCard from './PostCard.astro';
-import type { Author, PostWithMeta } from '../lib/content';
+import type { PostWithMeta } from '../lib/content';
 
 type Props = {
   posts: PostWithMeta[];
-  authors?: Map<string, Author>;
+  emptyMessage?: string;
 };
 
-const { posts, authors } = Astro.props;
+const { posts, emptyMessage = 'No stories are available yet.' } = Astro.props;
 ---
 
-<div class="post-grid">
-  {posts.map((post) => <PostCard post={post} author={authors?.get(post.data.author)} />)}
-</div>
+{
+  posts.length > 0 ? (
+    <div class="post-grid">
+      {posts.map((post) => <PostCard post={post} />)}
+    </div>
+  ) : (
+    <div class="plain-panel empty-state"><p>{emptyMessage}</p></div>
+  )
+}

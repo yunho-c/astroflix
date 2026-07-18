@@ -8,19 +8,19 @@ export const postSlugSchema = z
 
 export const imageSchema = z.object({
   url: z.url(),
-  alt: z.string(),
+  alt: z.string().trim().min(1),
 });
 
 export const postSchema = z.object({
-  title: z.string(),
+  title: z.string().trim().min(1),
   slug: postSlugSchema.optional(),
-  subtitle: z.string(),
-  description: z.string(),
+  subtitle: z.string().trim().min(1),
+  description: z.string().trim().min(1),
   pubDate: z.coerce.date(),
   updatedDate: z.coerce.date().optional(),
-  author: z.string(),
-  category: z.string(),
-  tags: z.array(z.string()).default([]),
+  author: postSlugSchema,
+  category: z.string().trim().min(1),
+  tags: z.array(z.string().trim().min(1)).default([]),
   image: imageSchema,
   featured: z.boolean().default(false),
   draft: z.boolean().default(false),

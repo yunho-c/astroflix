@@ -67,7 +67,7 @@ const pathname = getPostPath(post);
           <h2 class="section-title">Keep Reading</h2>
         </div>
       </div>
-      <PostGrid posts={relatedPosts} authors={authors} />
+      <PostGrid posts={relatedPosts} emptyMessage="There are no additional recommendations yet." />
     </div>
   </section>
   <script is:inline type="application/ld+json" set:html={serializeJsonLd(blogPostingJsonLd(post, author))} />

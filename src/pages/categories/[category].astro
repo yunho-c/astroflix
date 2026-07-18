@@ -1,7 +1,7 @@
 ---
 import PostGrid from '../../components/PostGrid.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getAllCategories, getAuthorMap, getPosts, slugify, unslugify } from '../../lib/content';
+import { getAllCategories, getPosts, slugify, unslugify } from '../../lib/content';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -13,7 +13,6 @@ export async function getStaticPaths() {
 
 const { categoryName } = Astro.props;
 const posts = (await getPosts()).filter((post) => slugify(post.data.category) === Astro.params.category);
-const authors = await getAuthorMap();
 ---
 
 <BaseLayout title={categoryName} description={`Posts in ${categoryName}.`}>
@@ -23,7 +22,7 @@ const authors = await getAuthorMap();
       <h1 class="page-title">{categoryName ?? unslugify(Astro.params.category ?? '')}</h1>
       <p class="lede">{posts.length} stories in this category.</p>
       <div class="content-offset">
-        <PostGrid posts={posts} authors={authors} />
+        <PostGrid posts={posts} />
       </div>
     </div>
   </section>

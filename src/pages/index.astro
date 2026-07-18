@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostGrid from '../components/PostGrid.astro';
+import { site } from '../data/site';
 import {
   formatDate,
   getAllCategories,
@@ -13,33 +14,48 @@ import {
 
 const posts = await getPosts();
 const authors = await getAuthorMap();
-const featured = await getFeaturedPost();
-const latestPosts = posts.filter((post) => post.id !== featured.id).slice(0, 6);
+const featured = getFeaturedPost(posts);
+const latestPosts = featured ? posts.filter((post) => post.id !== featured.id).slice(0, 6) : [];
 const tags = getAllTags(posts).slice(0, 8);
 const categories = getAllCategories(posts);
-const featuredAuthor = authors.get(featured.data.author);
+const featuredAuthor = featured ? authors.get(featured.data.author) : undefined;
 ---
 
-<BaseLayout title="Home" description="A cinematic Astro publication inspired by Jekflix." bodyClass="main-page">
-  <section class="hero" aria-labelledby="featured-title">
-    <img class="hero-media" src={featured.data.image.url} alt={featured.data.image.alt} />
-    <div class="container hero-content">
-      <div class="hero-copy">
-        <p class="eyebrow">{formatDate(featured.data.pubDate)}</p>
-        <h1 id="featured-title" class="hero-title">{featured.data.title}</h1>
-        <p class="hero-subtitle">{featured.data.subtitle}</p>
-        <div class="meta-row">
-          <span class="meta-pill">{featured.data.category}</span>
-          <span>{featured.minutesToRead} min read</span>
-          <span>{formatDate(featured.data.pubDate)}</span>
-          {featuredAuthor && <span>{featuredAuthor.data.name}</span>}
+<BaseLayout title="Home" description={site.description} bodyClass="main-page">
+  {
+    featured ? (
+      <section class="hero" aria-labelledby="featured-title">
+        <img class="hero-media" src={featured.data.image.url} alt={featured.data.image.alt} />
+        <div class="container hero-content">
+          <div class="hero-copy">
+            <p class="eyebrow">{formatDate(featured.data.pubDate)}</p>
+            <h1 id="featured-title" class="hero-title">{featured.data.title}</h1>
+            <p class="hero-subtitle">{featured.data.subtitle}</p>
+            <div class="meta-row">
+              <span class="meta-pill">{featured.data.category}</span>
+              <span>{featured.minutesToRead} min read</span>
+              <span>{formatDate(featured.data.pubDate)}</span>
+              {featuredAuthor && <span>{featuredAuthor.data.name}</span>}
+            </div>
+            <div class="meta-row">
+              <a class="button" href={getPostPath(featured)}>Read Now</a>
+            </div>
+          </div>
         </div>
-        <div class="meta-row">
-          <a class="button" href={getPostPath(featured)}>Read Now</a>
+      </section>
+    ) : (
+      <section class="empty-catalog hero" aria-labelledby="empty-catalog-title">
+        <div class="container hero-content">
+          <div class="hero-copy">
+            <p class="eyebrow">Your catalog starts here</p>
+            <h1 id="empty-catalog-title" class="hero-title">Publish the first story.</h1>
+            <p class="hero-subtitle">Add a Markdown post or connect a Notion database to fill this publication.</p>
+            <div class="meta-row"><a class="button" href="/about/">About this site</a></div>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
+    )
+  }
 
   <section class="section">
     <div class="container">
@@ -50,7 +66,7 @@ const featuredAuthor = authors.get(featured.data.author);
         </div>
         <a class="button secondary" href="/tags/">Browse tags</a>
       </div>
-      <PostGrid posts={latestPosts} authors={authors} />
+      <PostGrid posts={latestPosts} />
     </div>
   </section>
 
@@ -62,20 +78,24 @@ const featuredAuthor = authors.get(featured.data.author);
           <h2 class="section-title">Browse by signal</h2>
         </div>
       </div>
-      <div class="compact-grid">
-        {categories.map((category) => (
-          <a class="index-link" href={`/categories/${category.slug}/`}>
-            {category.name}
-            <span>{category.count}</span>
-          </a>
-        ))}
-        {tags.map((tag) => (
-          <a class="index-link" href={`/tags/${tag.slug}/`}>
-            #{tag.name}
-            <span>{tag.count}</span>
-          </a>
-        ))}
-      </div>
+      {
+        categories.length + tags.length > 0 ? (
+          <div class="compact-grid">
+            {categories.map((category) => (
+              <a class="index-link" href={`/categories/${category.slug}/`}>
+                {category.name}<span>{category.count}</span>
+              </a>
+            ))}
+            {tags.map((tag) => (
+              <a class="index-link" href={`/tags/${tag.slug}/`}>
+                #{tag.name}<span>{tag.count}</span>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="plain-panel empty-state"><p>Tags and categories appear after the first story is published.</p></div>
+        )
+      }
     </div>
   </section>
 </BaseLayout>

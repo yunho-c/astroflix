@@ -39,7 +39,7 @@ export type FontConfig = {
 const titilliumStack = ['Titillium Web', 'Helvetica Neue', 'Helvetica', 'sans-serif'];
 
 export const fonts: FontConfig = {
-  defaultLanguage: 'en',
+  defaultLanguage: site.language,
   links: [
     {
       rel: 'preconnect',
@@ -65,3 +65,4 @@ export const fonts: FontConfig = {
     },
   },
 };
+import { site } from './site';

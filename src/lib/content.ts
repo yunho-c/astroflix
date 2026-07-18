@@ -1,29 +1,51 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { site } from '../data/site';
+import {
+  countTaxonomy,
+  formatDate as formatDateForLanguage,
+  getPostSlug,
+  minutesToRead,
+  selectFeaturedPost,
+  slugify,
+  unslugify,
+  validateContent,
+} from './content-utils';
 
 export type Post = CollectionEntry<'posts'>;
 export type Author = CollectionEntry<'authors'>;
+export type Page = CollectionEntry<'pages'>;
 
 export type PostWithMeta = Post & {
   minutesToRead: number;
 };
 
-export async function getPosts() {
-  const posts = await getCollection('posts', ({ data }) => !data.draft);
-  return posts
-    .map((post) => ({
-      ...post,
-      minutesToRead: minutesToRead(post.body ?? post.rendered?.html ?? post.data.description),
-    }))
-    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+let authorsPromise: Promise<Author[]> | undefined;
+let postsPromise: Promise<PostWithMeta[]> | undefined;
+
+export function getAuthors() {
+  authorsPromise ??= getCollection('authors');
+  return authorsPromise;
 }
 
-export async function getFeaturedPost() {
-  const posts = await getPosts();
-  return posts.find((post) => post.data.featured) ?? posts[0];
+export function getPosts() {
+  postsPromise ??= Promise.all([getCollection('posts'), getAuthors()]).then(([entries, authors]) => {
+    const posts = entries
+      .filter((post) => !post.data.draft)
+      .map((post) => ({
+        ...post,
+        minutesToRead: minutesToRead(post.body ?? post.rendered?.html ?? post.data.description),
+      }))
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+    validateContent(posts, authors.map((author) => author.id));
+    return posts;
+  });
+
+  return postsPromise;
 }
 
-export async function getAuthors() {
-  return await getCollection('authors');
+export function getFeaturedPost(posts: readonly PostWithMeta[]) {
+  return selectFeaturedPost(posts);
 }
 
 export async function getAuthorMap() {
@@ -31,56 +53,22 @@ export async function getAuthorMap() {
   return new Map(authors.map((author) => [author.id, author]));
 }
 
-export function getPostSlug(post: { id: string; data: Record<string, unknown> }) {
-  const slug = post.data.slug;
-  return typeof slug === 'string' && slug ? slug : post.id;
-}
+export { getPostSlug, minutesToRead, slugify, unslugify };
 
-export function getPostPath(post: { id: string; data: Record<string, unknown> }) {
+export function getPostPath(post: { id: string; data: { slug?: string } }) {
   return `/posts/${getPostSlug(post)}/`;
 }
 
-export function minutesToRead(markdown: string) {
-  const text = markdown
-    .replace(/```[\s\S]*?```/g, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/[#*_>`~\-[\]()]/g, ' ');
-  const words = text.trim().split(/\s+/).filter(Boolean).length;
-  return Math.max(1, Math.ceil(words / 220));
-}
-
 export function formatDate(date: Date) {
-  return new Intl.DateTimeFormat('en', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-    timeZone: 'UTC',
-  }).format(date);
-}
-
-export function slugify(value: string) {
-  return value
-    .toLowerCase()
-    .normalize('NFKD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-export function unslugify(value: string) {
-  return value
-    .split('-')
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ');
+  return formatDateForLanguage(date, site.language);
 }
 
 export function getAllTags(posts: PostWithMeta[]) {
-  return countBy(posts.flatMap((post) => post.data.tags));
+  return countTaxonomy(posts.flatMap((post) => post.data.tags), 'tag');
 }
 
 export function getAllCategories(posts: PostWithMeta[]) {
-  return countBy(posts.map((post) => post.data.category));
+  return countTaxonomy(posts.map((post) => post.data.category), 'category');
 }
 
 export function getRelatedPosts(post: PostWithMeta, posts: PostWithMeta[], limit = 3) {
@@ -96,14 +84,4 @@ export function getRelatedPosts(post: PostWithMeta, posts: PostWithMeta[], limit
     .sort((a, b) => b.score - a.score || b.post.data.pubDate.valueOf() - a.post.data.pubDate.valueOf())
     .slice(0, limit)
     .map(({ post }) => post);
-}
-
-function countBy(values: string[]) {
-  const counts = new Map<string, number>();
-  for (const value of values) {
-    counts.set(value, (counts.get(value) ?? 0) + 1);
-  }
-  return [...counts.entries()]
-    .map(([name, count]) => ({ name, slug: slugify(name), count }))
-    .sort((a, b) => a.name.localeCompare(b.name));
 }

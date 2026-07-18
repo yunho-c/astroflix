@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostGrid from '../components/PostGrid.astro';
+import { site } from '../data/site';
 import { formatDate, getAuthorMap, getPostPath, getPosts, slugify } from '../lib/content';
 
 const posts = await getPosts();
@@ -25,7 +26,7 @@ const index = posts.map((post) => {
 });
 ---
 
-<BaseLayout title="Search" description="Search the Jekflix Astro story archive.">
+<BaseLayout title="Search" description={`Search the ${site.name} story archive.`}>
   <section class="section">
     <div class="container">
       <p class="eyebrow">Live archive</p>
@@ -41,7 +42,7 @@ const index = posts.map((post) => {
           <div class="plain-panel">
             <p>Live filtering needs JavaScript. The latest stories are available below.</p>
           </div>
-          <PostGrid posts={posts} authors={authors} />
+          <PostGrid posts={posts} />
         </noscript>
       </div>
     </div>

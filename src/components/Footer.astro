@@ -1,71 +1,59 @@
 ---
-import { site } from '../data/site';
+import EnvelopeSimple from '@northsoon/phosphor-icons-astro/icons/EnvelopeSimple.astro';
+import GithubLogo from '@northsoon/phosphor-icons-astro/icons/GithubLogo.astro';
+import GlobeSimple from '@northsoon/phosphor-icons-astro/icons/GlobeSimple.astro';
+import Heart from '@northsoon/phosphor-icons-astro/icons/Heart.astro';
+import LinkedinLogo from '@northsoon/phosphor-icons-astro/icons/LinkedinLogo.astro';
+import Rss from '@northsoon/phosphor-icons-astro/icons/Rss.astro';
+import XLogo from '@northsoon/phosphor-icons-astro/icons/XLogo.astro';
+import { site, type SocialIcon } from '../data/site';
 
-function getSocialIcon(label: string) {
-  const normalizedLabel = label.toLowerCase();
-  if (normalizedLabel.includes('github')) return 'github';
-  if (normalizedLabel.includes('rss') || normalizedLabel.includes('feed')) return 'rss';
-  return 'x';
-}
-
-const socialLinks = [
-  ...site.social.map((item) => ({
-    ...item,
-    Icon: getSocialIcon(item.label),
-  })),
-];
+const socialIcons = {
+  email: EnvelopeSimple,
+  github: GithubLogo,
+  linkedin: LinkedinLogo,
+  rss: Rss,
+  website: GlobeSimple,
+  x: XLogo,
+} satisfies Record<SocialIcon, typeof GithubLogo>;
 
 const menuLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/about/', label: 'About' },
-  { href: '/contact/', label: 'Contact' },
-  { href: '/rss.xml', label: 'Feed' },
+  ...site.nav,
+  ...(!site.nav.some((item) => item.href === '/rss.xml') ? [{ href: '/rss.xml', label: 'Feed' }] : []),
 ];
 ---
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <p class="footer-social">
-      {
-        socialLinks.map((item) => {
-          return (
-            <a href={item.href} title={item.label} aria-label={item.label}>
-              {item.Icon === 'github' && <ph-github-logo size="28" weight="fill" aria-hidden="true"></ph-github-logo>}
-              {item.Icon === 'rss' && <ph-rss size="28" weight="regular" aria-hidden="true"></ph-rss>}
-              {item.Icon === 'x' && <ph-x-logo size="28" weight="fill" aria-hidden="true"></ph-x-logo>}
-            </a>
-          );
-        })
-      }
-    </p>
+    {
+      site.social.length > 0 && (
+        <p class="footer-social">
+          {site.social.map((item) => {
+            const Icon = socialIcons[item.icon];
+            return (
+              <a href={item.href} title={item.label} aria-label={item.label}>
+                <Icon size={28} weight={item.icon === 'rss' ? 'regular' : 'fill'} />
+              </a>
+            );
+          })}
+        </p>
+      )
+    }
 
     <nav aria-label="Footer">
       <ul class="footer-menu">
-        {
-          menuLinks.map((item) => (
-            <li>
-              <a href={item.href}>{item.label}</a>
-            </li>
-          ))
-        }
+        {menuLinks.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
       </ul>
     </nav>
 
-    <p class="footer-credit">
-      <span>Jekflix</span> was made with
-      <span class="love" aria-label="love">
-        <ph-heart size="20" weight="regular" color="var(--accent)" aria-hidden="true"></ph-heart>
-      </span>
-      by <a href="https://rossener.com" target="_blank" rel="noreferrer" class="creator"
-        >Thiago Rossener</a
-      >
-    </p>
+    {
+      site.footer.showThemeCredit && (
+        <p class="footer-credit">
+          <span>{site.name}</span> carries the Jekflix idea forward with
+          <span class="love" aria-label="love"><Heart size={20} color="var(--accent)" /></span>
+          Original theme by <a href="https://rossener.com" class="creator">Thiago Rossener</a>.
+        </p>
+      )
+    }
   </div>
 </footer>
-
-<script>
-  import '@phosphor-icons/webcomponents/PhGithubLogo';
-  import '@phosphor-icons/webcomponents/PhHeart';
-  import '@phosphor-icons/webcomponents/PhRss';
-  import '@phosphor-icons/webcomponents/PhXLogo';
-</script>
