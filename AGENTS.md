@@ -109,11 +109,18 @@ For documentation-only changes, a build is not required unless package/config be
 - Preserve user changes in the worktree. Do not reset, checkout, or remove unrelated files.
 - If using assets or design details from the original template, confirm license compatibility and document the choice where it matters.
 
+## Current Architecture
+
+- Public, non-secret site settings are validated in `src/data/site.ts`; environment variables select the post source and hold Notion credentials only.
+- Posts can come from typed local Markdown or Notion. Authors and customizable About/Contact pages remain typed local Markdown in both modes.
+- Shared content helpers validate author references, post-route uniqueness, and Unicode-safe taxonomy routes during builds.
+- Astro components render the static browsing and reading experience. Client JavaScript is limited to search, the mobile menu, header tone, and reading progress.
+
 ## Near-Term Direction
 
-The next useful work is to define the content model and route/component architecture before polishing visuals:
+The template baseline is intended to stay generic while publications created from it own their branding, content, deployment settings, and secrets. Useful future work includes:
 
-- Decide how posts, authors, tags, and site settings are represented in Astro content collections or data files.
-- Map old Jekyll layouts/includes to modern components.
-- Add Svelte only where interactivity is required, such as search, mobile menu, reading progress, and modal behavior.
-- Establish the styling system before recreating multiple pages.
+- Continue visual and accessibility comparisons against the original template without porting legacy implementation details.
+- Add optional integrations behind typed, disabled-by-default configuration boundaries.
+- Keep Markdown and Notion behavior aligned whenever the post model or rendering pipeline changes.
+- Preserve zero-content builds, deterministic static output, and the small client-JavaScript budget.
