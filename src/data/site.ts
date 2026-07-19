@@ -82,11 +82,11 @@ export function defineSiteConfig(config: unknown): SiteConfig {
 }
 
 export const site = defineSiteConfig({
-  name: 'Jekflix Astro',
-  title: 'Jekflix Astro',
+  name: 'Astroflix',
+  title: 'Astroflix',
   description:
-    'A modern Astro reproduction of the Jekflix publishing experience, rebuilt for cinematic discovery and comfortable reading.',
-  url: 'https://jekflix-astro.example.com',
+    'A cinematic Astro publication template inspired by Jekflix and built for comfortable reading.',
+  url: 'https://astroflix.example.com',
   language: 'en',
   theme: {
     accent: '#ff0a16',
@@ -99,16 +99,16 @@ export const site = defineSiteConfig({
   ],
   social: [
     {
-      href: 'https://github.com/yunho-c/jekflix-astro',
-      label: 'Jekflix Astro on GitHub',
+      href: 'https://github.com/yunho-c/astroflix',
+      label: 'Astroflix on GitHub',
       icon: 'github',
     },
     { href: '/rss.xml', label: 'RSS feed', icon: 'rss' },
   ],
   header: {
-    badge: 'v0.1.0',
+    badge: 'v0.2.0',
     cta: {
-      href: 'https://github.com/yunho-c/jekflix-astro',
+      href: 'https://github.com/yunho-c/astroflix',
       label: 'Use this template',
     },
   },

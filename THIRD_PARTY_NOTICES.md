@@ -1,6 +1,6 @@
 # Third-party notices
 
-Jekflix Astro is an independent modern reproduction informed by the product and visual ideas of the original [Jekflix template](https://github.com/thiagorossener/jekflix-template). It does not mechanically port the original Jekyll implementation.
+Astroflix is an independent modern reproduction informed by the product and visual ideas of the original [Jekflix template](https://github.com/thiagorossener/jekflix-template). It does not mechanically port the original Jekyll implementation.
 
 ## Original Jekflix template
 

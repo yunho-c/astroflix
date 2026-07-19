@@ -1,6 +1,6 @@
 ---
 title: Send a signal
-description: Contact Jekflix Astro.
+description: Contact Astroflix.
 eyebrow: Contact
 lede: Choose one of the contact links below, or configure a form endpoint to accept messages directly from this page.
 ---

@@ -2,7 +2,7 @@
 
 ## Project Goal
 
-This project is a modern reproduction of the Jekflix theme. The original Jekflix template is a Jekyll theme inspired by Netflix-style browsing, adapted for a blog/content site. This repo should preserve that strong visual and product idea while rebuilding it with modern frontend practices, maintainable components, typed data, and a clean development workflow.
+Astroflix is a modern reproduction of the Jekflix theme. The original Jekflix template is a Jekyll theme inspired by Netflix-style browsing, adapted for a blog/content site. This repo should preserve that strong visual and product idea while rebuilding it with modern frontend practices, maintainable components, typed data, and a clean development workflow.
 
 The local reference copy of the original template is available at:
 

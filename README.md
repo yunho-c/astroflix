@@ -1,4 +1,4 @@
-# Jekflix Astro
+# Astroflix
 
 A reusable Astro template for a cinematic, Netflix-inspired publication. It combines typed content, static routes, accessible browsing, and a small amount of intentional client JavaScript while preserving the product spirit of the original Jekflix theme.
 
@@ -25,7 +25,7 @@ Before publishing a site created from this template:
 4. Run `bun test`, `bun run check`, and `bun run build`.
 5. Review the attribution setting and retain required source notices.
 
-The checked-in URL is deliberately `https://jekflix-astro.example.com`; it is not suitable for a production deployment.
+The checked-in URL is deliberately `https://astroflix.example.com`; it is not suitable for a production deployment.
 
 ## Commands
 
@@ -155,4 +155,4 @@ The template includes a featured homepage, post grid, article pages, reading pro
 
 CI uses a frozen lockfile and fails on moderate-or-higher dependency advisories. See [SECURITY.md](SECURITY.md) for the currently accepted low-severity development-server advisory.
 
-Jekflix Astro is MIT licensed. It is an independent reproduction informed by the original Jekflix product and visual ideas. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for attribution and dependency notices.
+Astroflix is MIT licensed. It is an independent reproduction informed by the original Jekflix product and visual ideas. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for attribution and dependency notices.

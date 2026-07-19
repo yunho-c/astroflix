@@ -1,7 +1,7 @@
 ---
 name: Yunho Cho
 role: Template maintainer
-bio: Yunho maintains Jekflix Astro and writes about building thoughtful, modern software and publishing experiences.
+bio: Yunho maintains Astroflix and writes about building thoughtful, modern software and publishing experiences.
 avatar:
   url: https://github.com/yunho-c.png
   alt: Portrait of Yunho Cho
