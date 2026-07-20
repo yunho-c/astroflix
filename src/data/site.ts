@@ -106,7 +106,7 @@ export const site = defineSiteConfig({
     { href: '/rss.xml', label: 'RSS feed', icon: 'rss' },
   ],
   header: {
-    badge: 'v0.2.0',
+    badge: 'v0.1.1',
     cta: {
       href: 'https://github.com/yunho-c/astroflix',
       label: 'Use this template',
